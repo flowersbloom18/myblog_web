@@ -14,6 +14,7 @@ const useAppStore = defineStore('app', {
       return { ...state };
     },
     appDevice(state: AppState) {
+      console.log('state.device=', state.device);
       return state.device;
     },
     appAsyncMenus(state: AppState): RouteRecordNormalized[] {
@@ -52,6 +53,7 @@ const useAppStore = defineStore('app', {
           content: 'loading',
           closable: true,
         });
+        // @ts-ignore
         const { data } = await getMenuList();
         this.serverMenu = data;
         notifyInstance = Notification.success({

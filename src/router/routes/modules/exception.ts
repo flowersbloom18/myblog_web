@@ -2,7 +2,7 @@ import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
 const EXCEPTION: AppRouteRecordRaw = {
-  path: '/exception',
+  path: 'exception',
   name: 'exception',
   component: DEFAULT_LAYOUT,
   meta: {

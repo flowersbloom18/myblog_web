@@ -35,3 +35,9 @@ export interface GeneralChart {
   xAxis: string[];
   data: Array<{ name: string; value: number[] }>;
 }
+
+// Vue 3 的类型声明文件
+declare module 'vue' {
+  export function ref<T>(value: T): { value: T };
+  export function reactive<T extends object>(raw: T): T;
+}

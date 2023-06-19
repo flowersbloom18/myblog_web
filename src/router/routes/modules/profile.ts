@@ -2,7 +2,7 @@ import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
 const PROFILE: AppRouteRecordRaw = {
-  path: '/profile',
+  path: 'profile',
   name: 'profile',
   component: DEFAULT_LAYOUT,
   meta: {

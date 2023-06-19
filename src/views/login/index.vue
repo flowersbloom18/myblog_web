@@ -1,80 +1,51 @@
 <template>
   <div class="container">
-    <div class="logo">
-      <img
-        alt="logo"
-        src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
-      />
-      <div class="logo-text">Arco Design Pro</div>
-    </div>
-    <LoginBanner />
     <div class="content">
       <div class="content-inner">
         <LoginForm />
-      </div>
-      <div class="footer">
-        <Footer />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import Footer from '@/components/footer/index.vue';
-  import LoginBanner from './components/banner.vue';
   import LoginForm from './components/login-form.vue';
 </script>
 
 <style lang="less" scoped>
   .container {
-    display: flex;
+    // 背景图
+    background: url('@/assets/images/login.jpg') 50% / cover no-repeat;
+    width: 100%;
     height: 100vh;
-
-    .banner {
-      width: 550px;
-      background: linear-gradient(163.85deg, #1d2129 0%, #00308f 100%);
-    }
+    display: flex;
+    // 子绝父相，盒子居中
+    position: relative;
 
     .content {
-      position: relative;
-      display: flex;
-      flex: 1;
-      align-items: center;
-      justify-content: center;
-      padding-bottom: 40px;
-    }
-
-    .footer {
       position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-    }
-  }
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 60px 0 0 40px;
+      width: 400px;
+      height: 400px;
 
-  .logo {
-    position: fixed;
-    top: 24px;
-    left: 22px;
-    z-index: 1;
-    display: inline-flex;
-    align-items: center;
-
-    &-text {
-      margin-right: 4px;
-      margin-left: 4px;
-      color: var(--color-fill-1);
-      font-size: 20px;
+      border-radius: 10px; // 圆角
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); //阴影
+      background-color: rgba(255, 255, 255, 0.8);
     }
   }
 </style>
 
 <style lang="less" scoped>
-  // responsive
-  @media (max-width: @screen-lg) {
+  // responsive 移动端响应式布局
+  @media (max-width: @screen-md) {
     .container {
-      .banner {
-        width: 25%;
+      .content {
+        padding: 8px 0 0 8px;
+        width: 339px;
+        height: auto;
       }
     }
   }

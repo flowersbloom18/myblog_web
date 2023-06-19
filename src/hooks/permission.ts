@@ -1,15 +1,16 @@
 import { RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
-import { useUserStore } from '@/store';
+// import { useUserStore } from '@/store';
 
 export default function usePermission() {
-  const userStore = useUserStore();
+  // const userStore = useUserStore();
   return {
     accessRouter(route: RouteLocationNormalized | RouteRecordRaw) {
       return (
         !route.meta?.requiresAuth ||
         !route.meta?.roles ||
         route.meta?.roles?.includes('*') ||
-        route.meta?.roles?.includes(userStore.role)
+        route.meta?.roles?.includes('1') // 如今是存储字符串，所以尝试，权限为1，否则不行。
+        // || route.meta?.roles?.includes(userStore.role) //原版
       );
     },
     findFirstPermissionRoute(_routers: any, role = 'admin') {

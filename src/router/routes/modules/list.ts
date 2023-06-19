@@ -2,7 +2,7 @@ import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
 const LIST: AppRouteRecordRaw = {
-  path: '/list',
+  path: 'list',
   name: 'list',
   component: DEFAULT_LAYOUT,
   meta: {

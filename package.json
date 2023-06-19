@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --config ./config/vite.config.dev.ts",
+    "prod": "vite --config ./config/vite.config.prod.ts",
     "build": "vue-tsc --noEmit && vite build --config ./config/vite.config.prod.ts",
     "report": "cross-env REPORT=true npm run build",
     "preview": "npm run build && vite preview --host",
@@ -34,6 +35,7 @@
     "@vueuse/core": "^9.3.0",
     "arco-design-pro-vue": "^2.7.2",
     "axios": "^0.24.0",
+    "crypto-js": "^4.1.1",
     "dayjs": "^1.11.5",
     "echarts": "^5.4.0",
     "lodash": "^4.17.21",

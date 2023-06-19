@@ -256,8 +256,9 @@
     triggerBtn.value.dispatchEvent(event);
   };
   const switchRoles = async () => {
-    const res = await userStore.switchRoles();
-    Message.success(res as string);
+    // const res = await userStore.switchRoles();
+    // Message.success(res as string);
+    Message.success('switchRoles注释');
   };
   const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
 </script>

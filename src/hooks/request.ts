@@ -17,6 +17,7 @@ export default function useRequest<T>(
   const response = ref<T>(defaultValue);
   api()
     .then((res) => {
+      // @ts-ignore
       response.value = res.data as unknown as UnwrapRef<T>;
     })
     .finally(() => {

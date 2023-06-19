@@ -1,0 +1,17 @@
+export default {
+  // 'register.form.title': '注册 Arco Design Pro',
+  'register.form.title': 'FlowersBloom',
+  'register.form.userName.errMsg': '用户名不能为空',
+  'register.form.nickName.errMsg': '昵称不能为空',
+  'register.form.password.errMsg': '密码不能为空',
+  'register.form.password2.errMsg': '密码不能为空',
+  'register.form.errMsg': '登录出错，轻刷新重试',
+  'register.form.success': '注册成功，请登录',
+  'register.form.userName.placeholder': '请输入用户名',
+  'register.form.nickName.placeholder': '请输入昵称',
+  'register.form.password.placeholder': '请输入密码',
+  'register.form.password2.placeholder': '请再次输入密码',
+  'register.form.forgetPassword': '忘记密码',
+  'register.form.register': '注册账号',
+  'register.form.login': '返回登录',
+};

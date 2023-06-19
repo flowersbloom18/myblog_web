@@ -12,20 +12,47 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/',
-      redirect: 'login',
+      path: '/console', // 根路径
+      name: 'console',
+      redirect: '/console/login', // 重定向到登录
+      children: [
+        {
+          path: 'login', // 登录
+          name: 'login',
+          component: () => import('@/views/login/index.vue'),
+          meta: {
+            requiresAuth: false,
+          },
+        },
+        {
+          path: 'register', // 注册
+          name: 'register',
+          component: () => import('@/views/register/index.vue'),
+          meta: {
+            requiresAuth: false,
+          },
+        },
+        {
+          path: 'forgetPassword', // 找回密码
+          name: 'forgetPassword',
+          component: () => import('@/views/forget-password/index.vue'),
+          meta: {
+            requiresAuth: false,
+          },
+        },
+        {
+          path: 'test',
+          name: 'test',
+          component: () => import('@/views/login/test.vue'),
+          meta: {
+            requiresAuth: false,
+          },
+        },
+        ...appRoutes,
+        REDIRECT_MAIN,
+        NOT_FOUND_ROUTE,
+      ],
     },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/views/login/index.vue'),
-      meta: {
-        requiresAuth: false,
-      },
-    },
-    ...appRoutes,
-    REDIRECT_MAIN,
-    NOT_FOUND_ROUTE,
   ],
   scrollBehavior() {
     return { top: 0 };

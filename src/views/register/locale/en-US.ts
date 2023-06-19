@@ -1,0 +1,18 @@
+export default {
+  // 'Register.form.title': 'Register to Arco Design Pro',
+  'Register.form.title': 'FlowersBloom',
+  'Register.form.userName.errMsg': 'Username cannot be empty',
+  'Register.form.nickName.errMsg': 'Nickname cannot be empty',
+  'Register.form.password.errMsg': 'Password cannot be empty',
+  'Register.form.password2.errMsg': 'Password cannot be empty',
+  'Register.form.login.errMsg': 'Login error, refresh and try again',
+  'Register.form.login.success': 'welcome to use',
+  'Register.form.userName.placeholder': 'Please input your username',
+  'Register.form.nickName.placeholder': 'Please input your nickname',
+  'Register.form.password.placeholder': 'Please input your password',
+  'Register.form.password2.placeholder': 'Please input your password again',
+  'Register.form.rememberPassword': 'Remember password',
+  'Register.form.forgetPassword': 'Forgot password',
+  'Register.form.register': 'register account',
+  'register.form.success': 'Register successfully please login',
+};

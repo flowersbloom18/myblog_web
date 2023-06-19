@@ -1,0 +1,16 @@
+export default {
+  'forget.form.title': 'FlowersBloom',
+  'forget.form.email.errMsg': '邮箱不能为空',
+  'forget.form.code.errMsg': '验证码不能为空',
+  'forget.form.password.errMsg': '密码不能为空',
+  'forget.form.password2.errMsg': '密码不能为空',
+  'forget.form.errMsg': '重置出错，轻刷新重试',
+  'forget.form.success': '密码重置成功!',
+  'forget.form.email.placeholder': '请输入邮箱',
+  'forget.form.code.placeholder': '请输入验证码',
+  'forget.form.password.placeholder': '请输入密码',
+  'forget.form.password2.placeholder': '请再次输入密码',
+  'forget.form.forgetPassword': '忘记密码',
+  'forget.form.forget': '重置密码',
+  'forget.form.login': '返回登录',
+};
