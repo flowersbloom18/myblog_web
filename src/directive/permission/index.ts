@@ -8,9 +8,7 @@ function checkPermission(el: HTMLElement, binding: DirectiveBinding) {
 
   if (Array.isArray(value)) {
     if (value.length > 0) {
-      const permissionValues = value;
-
-      const hasPermission = permissionValues.includes(role);
+      const hasPermission = value.includes(role);
       if (!hasPermission && el.parentNode) {
         el.parentNode.removeChild(el);
       }

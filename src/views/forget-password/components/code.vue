@@ -5,19 +5,20 @@
       :status="status1"
       :loading="loading2"
       :disabled="countdown"
-      @click="sendEmail"
       shape="round"
+      @click="sendEmail"
       >{{ info }}
     </a-button>
   </div>
 </template>
 
 <script setup>
-  import { ref, watch, defineProps, reactive } from 'vue';
-  import { userForgetPassword } from '@/api/user';
+  import { ref, watch, reactive } from 'vue';
+  import { userBindEmailApi, userForgetPassword } from '@/api/user';
   import { Message } from '@arco-design/web-vue';
 
-  const props = defineProps(['isTrue', 'email2']); // 判断是否可以发送
+  // eslint-disable-next-line vue/require-prop-types
+  const props = defineProps(['isTrue', 'email2', 'case']); // 判断是否可以发送
 
   const info = ref('发送邮箱验证码');
   const loading2 = ref(false); // 选取状态(false可选取，true不可选取）
@@ -52,12 +53,25 @@
       password: null,
     });
     emailInfo.email = props.email2;
-    // TODO: 发送邮箱逻辑
-    const response = await userForgetPassword(emailInfo);
-    if (!response.data.code) {
-      Message.success(response.data.msg);
+    // TODO: 发送邮箱逻辑,根据不同情况切换不同的api
+    // 1、重置密码
+    // 2、绑定密码
+    if (props.case === 1) {
+      const response = await userForgetPassword(emailInfo);
+      if (!response.data.code) {
+        Message.success(response.data.msg);
+      } else {
+        Message.warning(response.data.msg);
+      }
+    } else if (props.case === 2) {
+      const response = await userBindEmailApi(emailInfo);
+      if (!response.data.code) {
+        Message.success(response.data.msg);
+      } else {
+        Message.warning(response.data.msg);
+      }
     } else {
-      Message.warning(response.data.msg);
+      Message.warning('未知错误');
     }
   };
 

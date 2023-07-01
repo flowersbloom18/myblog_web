@@ -1,5 +1,6 @@
 <template>
-  <div></div>
+  <h1>未知的天空</h1>
+  <div>？？？</div>
 </template>
 
 <script lang="ts" setup>
@@ -9,7 +10,6 @@
   const route = useRoute();
 
   const gotoPath = route.params.path as string;
-
   router.replace({ path: gotoPath });
 </script>
 

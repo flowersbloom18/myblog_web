@@ -17,6 +17,7 @@ export function removeEventListen(
   event: string,
   handler: EventListenerOrEventListenerObject,
   capture = false
+  // capture = true
 ) {
   if (
     target.removeEventListener &&

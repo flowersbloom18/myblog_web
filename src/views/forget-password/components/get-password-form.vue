@@ -39,7 +39,7 @@
       </a-form-item>
 
       <a-form-item
-        field="email"
+        field="code"
         :rules="[{ required: true, message: t('forget.form.code.errMsg') }]"
         :validate-trigger="['change', 'blur']"
         hide-label
@@ -56,6 +56,7 @@
           v-if="email2"
           :is-true="isTrue"
           :email2="email2"
+          :case="1"
           @click="confirmSend"
         />
         <!--只有存在，才会显示-->
@@ -229,7 +230,7 @@
         showSquare.value = false; // 此刻关闭。
         return;
       }
-      Message.success(t('login.form.login.success'));
+      Message.success('重置密码成功');
       // 注册之后呢，要登录
       await router.push('/console/login');
       showSquare.value = false; // 此刻关闭。

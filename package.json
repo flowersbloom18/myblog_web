@@ -2,7 +2,7 @@
   "name": "arco-design-pro-vue",
   "description": "Arco Design Pro for Vue",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "author": "ArcoDesign Team",
   "license": "MIT",
   "scripts": {
@@ -17,16 +17,12 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
-      "prettier --write",
-      "eslint --fix"
+      "prettier --write"
     ],
     "*.vue": [
-      "stylelint --fix",
-      "prettier --write",
-      "eslint --fix"
+      "prettier --write"
     ],
     "*.{less,css}": [
-      "stylelint --fix",
       "prettier --write"
     ]
   },

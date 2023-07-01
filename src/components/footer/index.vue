@@ -1,5 +1,6 @@
 <template>
-  <a-layout-footer class="footer">Arco Pro</a-layout-footer>
+  <!--  <a-layout-footer class="footer">FlowersBloom</a-layout-footer>-->
+  <div class="footer"> FlowersBloom </div>
 </template>
 
 <script lang="ts" setup></script>
@@ -11,6 +12,7 @@
     justify-content: center;
     height: 40px;
     color: var(--color-text-2);
+    // 变量失效的原因:有时候放到a-layout会失效。
     text-align: center;
   }
 </style>

@@ -1,6 +1,6 @@
 export type RoleType = 0 | 1 | 2 | 3;
 
-export interface UserInfoState {
+export interface UserLoginInfoState {
   token?: string;
   nick_name?: string;
   role?: RoleType; // 1 管理员  2 普通用户  3 游客  0其它

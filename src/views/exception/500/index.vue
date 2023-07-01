@@ -20,6 +20,7 @@
   export default {
     name: '500',
   };
+  console.log('500');
 </script>
 
 <style scoped lang="less">

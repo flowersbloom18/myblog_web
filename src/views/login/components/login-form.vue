@@ -110,7 +110,6 @@
   const userStore = useUserStore(); // 状态管理
   const isVerified = ref(false); //  isVerified 验证成功触发
   const showSquare = ref(false); // 判断是否开启验证码
-
   // 流程是，验证码输入成功后，再调用表单的代码开始登录。否则依然要等待输入
   const handleVerifySuccess = () => {
     isVerified.value = true;
@@ -171,6 +170,7 @@
           ...othersQuery,
         },
       });
+
       isVerified.value = false; // 在登录信息输入错误后，需要重新验证表单。
       showSquare.value = false; // 此刻关闭。
       Message.success(t('login.form.login.success'));

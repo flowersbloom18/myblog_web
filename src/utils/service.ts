@@ -9,6 +9,7 @@ const Service = axios.create({
 });
 
 Service.interceptors.request.use((request) => {
+  // 携带token发起请求
   const info = localStorage.getItem('userInfo');
   if (info === null) {
     return request;

@@ -14,7 +14,7 @@ export default function setupUserLoginInfoGuard(router: Router) {
         next(); // 如果权限不为0
       } else {
         try {
-          userStore.loadUserInfo();
+          await userStore.loadUserInfo();
           next();
         } catch (error) {
           await userStore.logout();

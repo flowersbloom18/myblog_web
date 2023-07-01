@@ -4,11 +4,11 @@ import { setToken, clearToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import aes from '@/utils/aes';
 import { Message } from '@arco-design/web-vue';
-import { UserInfoState } from './types';
-import useAppStore from '../app';
+import { UserLoginInfoState } from './types';
+// import useAppStore from '../app';
 
 const useUserStore = defineStore('user', {
-  state: (): UserInfoState => ({
+  state: (): UserLoginInfoState => ({
     token: '',
     nick_name: '',
     role: 0, // 1 管理员  2 普通用户  3 游客 0 其它（无权限）
@@ -18,14 +18,14 @@ const useUserStore = defineStore('user', {
   }),
 
   getters: {
-    userInfo(state: UserInfoState): UserInfoState {
+    userInfo(state: UserLoginInfoState): UserLoginInfoState {
       return { ...state };
     },
   },
 
   actions: {
     // 修改userInfo
-    setUserInfo(info: UserInfoState) {
+    setUserInfo(info: UserLoginInfoState) {
       this.$patch(info); // 修改数据
       // 持久化--安全性较低。
       // localStorage.setItem('userInfo', JSON.stringify(info));
@@ -62,14 +62,18 @@ const useUserStore = defineStore('user', {
       }
       this.setUserInfo(userInfo);
     },
-    // switchRoles() {
-    //   return new Promise((resolve) => {
-    //     this.role = this.role === 'user' ? 'admin' : 'user';
-    //     resolve(this.role);
-    //   });
-    // },
+    switchRoles() {
+      // return new Promise((resolve) => {
+      //   this.role = this.role === 'user' ? 'admin' : 'user';
+      //   resolve(this.role);
+      // });
+      // return new Promise((resolve) => {
+      //   this.role = this.role === 2 ? 1 : 2;
+      //   resolve(this.role);
+      // });
+    },
     // Set user's information
-    setInfo(partial: Partial<UserInfoState>) {
+    setInfo(partial: Partial<UserLoginInfoState>) {
       this.$patch(partial);
     },
 
@@ -96,11 +100,11 @@ const useUserStore = defineStore('user', {
       }
     },
     logoutCallBack() {
-      const appStore = useAppStore();
+      // const appStore = useAppStore();
       this.resetInfo();
       clearToken();
       removeRouteListener();
-      appStore.clearServerMenu();
+      // appStore.clearServerMenu();
     },
     // Logout
     async logout() {

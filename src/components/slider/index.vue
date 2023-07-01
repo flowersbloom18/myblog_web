@@ -79,7 +79,7 @@
       // tips
       text: {
         type: String,
-        default: '向右侧滑动',
+        default: '请向右侧滑动',
       },
       // verify successful text
       successText: {

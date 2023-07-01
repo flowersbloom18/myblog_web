@@ -20,6 +20,7 @@
   export default {
     name: '403',
   };
+  console.log('403');
 </script>
 
 <style scoped lang="less">

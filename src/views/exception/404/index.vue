@@ -26,6 +26,7 @@
   export default {
     name: '404',
   };
+  console.log('404');
 </script>
 
 <style scoped lang="less">

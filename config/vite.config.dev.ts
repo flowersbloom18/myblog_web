@@ -9,6 +9,10 @@ export default mergeConfig(
   {
     mode: 'development',
     server: {
+      open: true,
+      fs: {
+        strict: true,
+      },
       port: 3000,
       proxy: {
         '/uploads': {
