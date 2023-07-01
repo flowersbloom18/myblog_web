@@ -93,7 +93,7 @@ const router = createRouter({
             {
               path: 'tag',
               name: 'tag',
-              component: () => import('@/views/user/collect/index.vue'),
+              component: () => import('@/views/tag/index.vue'),
               meta: {
                 locale: '标签',
                 requiresAuth: true,

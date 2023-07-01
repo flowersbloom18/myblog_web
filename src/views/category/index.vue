@@ -41,16 +41,23 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary" @click="addUser">
+            <a-button type="primary" @click="addCategory">
               <template #icon>
                 <icon-plus />
               </template>
-              新增用户
+              新增分类
             </a-button>
             <a-button type="primary" status="danger" @click="deleteAll"
               >批量删除
             </a-button>
           </a-space>
+        </a-col>
+        <a-col :span="12">
+          <div style="float: right">
+            <a-button type="primary" @click="attachmentOpen"
+              >选择附件
+            </a-button>
+          </div>
         </a-col>
       </a-row>
 
@@ -64,10 +71,21 @@
         row-key="id"
         :row-selection="rowSelection"
       >
-        <template #avatar="{ rowIndex }">
-          <!--      <a-avatar>-->
-          <img :src="renderData[rowIndex].avatar" alt="" style="width: 50px" />
-          <!--      </a-avatar>-->
+        <template #cover="{ rowIndex }">
+          <a-image
+            v-if="renderData[rowIndex].cover"
+            height="80px"
+            width="100%"
+            :src="renderData[rowIndex].cover"
+            alt="封面不存在"
+          />
+          <a-image
+            v-else
+            height="80px"
+            width="100%"
+            :src="defaultCover"
+            alt="封面不存在"
+          />
         </template>
         <!--配合插槽来使用-->
         <template #created_at="{ rowIndex }">
@@ -111,81 +129,71 @@
     </a-card>
   </div>
   <!--  弹出层表单【编辑】-->
+  <!-- update -->
   <a-modal
     v-model:visible="visible"
-    title="编辑表单"
+    title="修改分类"
     @cancel="handleCancel"
     @ok="handleOk"
   >
-    <a-form :model="form">
+    <a-form ref="formRef" :model="form">
       <a-form-item
-        field="nick_name"
-        label="用户昵称"
-        :rules="[{ required: true, message: '请输入完整信息' }]"
+        field="name"
+        label="分类名称"
+        :rules="[{ required: true, message: '请输入分类名称' }]"
+        :validate-trigger="['change', 'blur']"
       >
-        <a-input v-model="form.nick_name" placeholder="请输入昵称" />
+        <a-input v-model="form.name" placeholder="请输入分类名称" />
+      </a-form-item>
+    </a-form>
+
+    <a-form :model="form">
+      <a-form-item field="cover" label="封面">
+        <a-input v-model="form.cover" placeholder="请输入封面" allow-clear />
       </a-form-item>
     </a-form>
   </a-modal>
-  <!--  add user-->
+  <!--  add -->
   <a-modal
     v-model:visible="visible2"
-    title="新增用户"
+    title="新增分类"
     @cancel="handleCancel2"
     @ok="handleOk2"
   >
-    <a-form :model="userForm" auto-label-width class="a-form">
+    <a-form ref="formRef" :model="categoryForm" auto-label-width class="a-form">
       <a-form-item
-        field="user_name"
-        label="用户名"
-        :rules="[{ required: true, message: '请输入完整信息' }]"
+        field="name"
+        label="分类名称"
+        :rules="[{ required: true, message: '请输入分类名称' }]"
+        :validate-trigger="['change', 'blur']"
       >
-        <a-input v-model="userForm.user_name" placeholder="请输入用户名" />
+        <a-input v-model="categoryForm.name" placeholder="请输入分类名称" />
       </a-form-item>
 
-      <a-form-item
-        field="nick_name"
-        label="昵称"
-        :rules="[{ required: true, message: '请输入完整信息' }]"
-      >
-        <a-input v-model="userForm.nick_name" placeholder="请输入用户昵称" />
-      </a-form-item>
-
-      <a-form-item
-        field="password"
-        label="密码"
-        :rules="[{ required: true, message: '请输入完整信息' }]"
-      >
-        <a-input v-model="userForm.password" placeholder="请输入密码" />
-      </a-form-item>
-
-      <a-form-item
-        field="role"
-        label="权限"
-        :rules="[{ required: true, message: '请输入完整信息' }]"
-      >
-        <a-select
-          v-model="userForm.role"
-          :options="roleOptions"
-          placeholder="请选择权限"
+      <a-form-item field="cover" label="封面">
+        <a-input
+          v-model="categoryForm.cover"
+          placeholder="请输入封面"
           allow-clear
-        >
-        </a-select>
+        />
       </a-form-item>
     </a-form>
+  </a-modal>
+  <!--attachment-->
+  <a-modal
+    v-model:visible="isOpen"
+    width="70%"
+    title="选择附件"
+    hide-cancel="true"
+    ok-text="取消"
+    @ok="handleOK3"
+  >
+    <Attachment />
   </a-modal>
 </template>
 
 <script lang="ts" setup>
-  import {
-    AddUserData,
-    adminCreateUserApi,
-    getUserList,
-    removeUserApi,
-    UpdateRoleData,
-    UserPolicyRecord,
-    userUpdateRoleApi,
-  } from '@/api/user';
+  import Attachment from '@/views/attachment/index.vue';
   import { reactive, ref, UnwrapRef } from 'vue';
   import {
     TableColumnData,
@@ -193,14 +201,36 @@
   } from '@arco-design/web-vue/es/table/interface';
   import { Message } from '@arco-design/web-vue';
   import getFormatDate from '@/utils/date';
-  import QueryParams, { Remove } from '@/types/global';
+  import QueryParams, {
+    FormRecord,
+    nameCoverType,
+    Remove,
+  } from '@/types/global';
+  import {
+    createCategoryApi,
+    deleteCategoryApi,
+    getCategoryApi,
+    updateCategoryApi,
+  } from '@/api/category';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
 
-  // 修改表单，需要验证表单，才能提交
-  const form: UpdateRoleData = reactive({
-    user_id: null,
-    nick_name: '',
+  // 打开附件
+  const isOpen = ref(false);
+  const handleOK3 = () => {
+    isOpen.value = false;
+  };
+  const attachmentOpen = () => {
+    isOpen.value = true;
+  };
+  // 修改表单
+  const form: nameCoverType = reactive({
+    name: '',
+    cover: '',
   });
 
+  // 默认封面
+  const defaultCover = ref('');
+  defaultCover.value = '/src/assets/slider/0.jpg';
   // 分页数据
   const page: QueryParams = reactive({
     page: 1,
@@ -208,11 +238,10 @@
     key: '', // 模糊查询
   });
 
-  // 创建用户
-  const userForm: AddUserData = reactive({
-    user_name: '',
-    nick_name: '',
-    password: '',
+  // 创建分类
+  const categoryForm: nameCoverType = reactive({
+    name: '',
+    cover: '',
   });
 
   const scroll = {
@@ -222,23 +251,23 @@
   const columns: TableColumnData[] = [
     {
       title: '分类名称',
-      dataIndex: 'user_name',
+      dataIndex: 'name',
       fixed: 'left',
       align: 'center',
       width: 100,
     },
     {
       title: '封面',
-      dataIndex: 'avatar',
+      dataIndex: 'cover',
       align: 'center',
-      slotName: 'avatar',
+      slotName: 'cover',
       width: 100,
     },
     {
       title: '博客数量',
-      dataIndex: 'avatar',
+      dataIndex: 'blog_num',
       align: 'center',
-      slotName: 'avatar',
+      slotName: 'blog_num',
       width: 100,
     },
     {
@@ -259,26 +288,24 @@
     },
   ];
 
-  const renderData = ref<UserPolicyRecord[]>([]);
+  const renderData = ref<FormRecord[]>([]);
 
-  // 检测表单数据是否完善
-  const validateUserInfo = () => {
-    return Object.values(form).every((value) => value !== '');
-  };
-  const validateCreateUserInfo = () => {
-    return Object.values(userForm).every((value) => value !== '');
-  };
+  // 分类id
+  const id = ref(null);
   // 编辑表单
   const visible = ref(false);
   // 新增表单
   const visible2 = ref(false);
+  // 表单校验
+  const formRef = ref<FormInstance>();
 
   // 编辑表单
   const edit = (data: any) => {
     visible.value = true;
     // 存储数据
-    form.user_id = data.id;
-    form.nick_name = data.nick_name;
+    id.value = data.id;
+    form.name = data.name;
+    form.cover = data.cover;
   };
   // 编辑表单取消
   const handleCancel = () => {
@@ -286,20 +313,24 @@
   };
   // 编辑表单提交
   const handleOk = async () => {
-    // 优先判断表单数据是否被填充完毕
-    if (!validateUserInfo()) {
-      Message.warning('请将表单数据填充完整！');
-      return;
-    }
-    const data = await userUpdateRoleApi(form);
-    if (data.data.code) {
-      Message.error(data.data.msg);
-      return;
-    }
-    Message.success(data.data.msg);
+    // 表单校验
+    const state = await formRef.value?.validate();
+    // 如果存在响应结果，则说明数据错误
+    if (state) {
+      visible.value = true; // 目前无法解决，一出现错误，表格自动关闭，所以干脆直接开启。
+      Message.warning('请输入完整信息！');
+    } else {
+      // 分类id的获取
+      const data = await updateCategoryApi(id.value, form);
+      if (data.data.code) {
+        Message.error(data.data.msg);
+        return;
+      }
+      Message.success(data.data.msg);
 
-    // eslint-disable-next-line no-use-before-define
-    await fetchData();
+      // eslint-disable-next-line no-use-before-define
+      await getData();
+    }
   };
 
   const idList: Remove = reactive({
@@ -309,7 +340,7 @@
   const isDelete = async (list: number) => {
     idList.id_list[idList.id_list.length] = list;
 
-    const data = await removeUserApi(idList);
+    const data = await deleteCategoryApi(idList);
 
     if (data.data.code) {
       Message.error(data.data.msg);
@@ -319,11 +350,11 @@
     Message.success(data.data.msg);
     idList.id_list = [];
     // eslint-disable-next-line no-use-before-define
-    await fetchData();
+    await getData();
   };
 
-  // 管理员创建用户
-  const addUser = () => {
+  // 管理员创建分类
+  const addCategory = () => {
     // 展示表单
     visible2.value = true;
   };
@@ -331,54 +362,50 @@
   const handleCancel2 = () => {
     // 关闭并清空表单。
     visible2.value = false;
-    userForm.user_name = '';
-    userForm.nick_name = '';
-    userForm.password = '';
-    userForm.role = null;
+    categoryForm.name = '';
+    categoryForm.cover = '';
   };
-  // 创建用户提交
+  // 创建分类提交
   const handleOk2 = async () => {
-    // 优先判断表单数据是否被填充完毕
-    if (!validateCreateUserInfo()) {
-      Message.warning('请将表单数据填充完整！');
-      return;
+    // 表单校验
+    const state = await formRef.value?.validate();
+    // 如果存在响应结果，则说明数据错误
+    if (state) {
+      visible2.value = true; // 目前无法解决，一出现错误，表格自动关闭，所以干脆直接开启。
+      Message.warning('请输入完整信息！');
+    } else {
+      const data = await createCategoryApi(categoryForm);
+      if (data.data.code) {
+        Message.error(data.data.msg);
+        categoryForm.name = '';
+        categoryForm.cover = '';
+        return;
+      }
+      Message.success(data.data.msg);
+      categoryForm.name = '';
+      categoryForm.cover = '';
+      // eslint-disable-next-line no-use-before-define
+      await getData();
     }
-    const data = await adminCreateUserApi(userForm);
-    if (data.data.code) {
-      Message.error(data.data.msg);
-      userForm.user_name = '';
-      userForm.nick_name = '';
-      userForm.password = '';
-      userForm.role = null;
-      return;
-    }
-    Message.success(data.data.msg);
-    userForm.user_name = '';
-    userForm.nick_name = '';
-    userForm.password = '';
-    userForm.role = null;
-    // eslint-disable-next-line no-use-before-define
-    await fetchData();
   };
 
   // 总共几条数据
   const total = ref(0);
 
   // 请求数据
-  const fetchData = async () => {
+  const getData = async () => {
     try {
       // page limit
-      const { data } = await getUserList(page);
+      const { data } = await getCategoryApi(page);
       let result = data.data.list;
-      console.log('list');
       // 获取信息总条数，
       total.value = data.data.count;
 
       // 将数据结构合并到新对象
-      result = result.map((item: { user: any; role_id: any }) => ({
+      result = result.map((item: { category: any; blog_num: number }) => ({
         // key: item.user.id,
-        ...item.user,
-        role_id: item.role_id,
+        ...item.category,
+        blog_num: item.blog_num,
       }));
       data.list = result;
       renderData.value = data.list;
@@ -391,12 +418,12 @@
   // 分页信息同步
   const changePage = (_page: number) => {
     page.page = _page;
-    fetchData();
+    getData();
   };
   const changeLimit = (_limit: any) => {
     page.limit = _limit;
     page.page = 1; // 数量转换的话需要重置页码
-    fetchData();
+    getData();
   };
   // 列选择器配置
   const rowSelection: UnwrapRef<TableRowSelection> | undefined = {
@@ -415,7 +442,7 @@
       return;
     }
     // request
-    const data = await removeUserApi({ id_list: selectedKeys.value });
+    const data = await deleteCategoryApi({ id_list: selectedKeys.value });
     if (data.data.code) {
       Message.warning(data.data.msg);
       selectedKeys.value = []; // 清空表单。
@@ -424,19 +451,19 @@
     Message.success(data.data.msg);
     selectedKeys.value = []; // 清空表单。
 
-    await fetchData();
+    await getData();
   };
 
-  fetchData();
+  getData();
 
   const search = () => {
-    fetchData();
+    getData();
   };
 
   const reset = () => {
     page.key = '';
     page.role = null;
-    fetchData();
+    getData();
   };
 </script>
 

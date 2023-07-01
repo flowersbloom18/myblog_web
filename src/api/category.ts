@@ -1,33 +1,27 @@
 import Service from '@/utils/service';
-import QueryParams, { Remove } from '@/types/global';
-import { AxiosRequestConfig } from 'axios';
+import QueryParams, { nameCoverType, Remove } from '@/types/global';
 
-export interface categoryType {
-  name: string;
-  cover: string;
+// 新增分类（请求体）
+export function createCategoryApi(data: nameCoverType) {
+  return Service.post('/api/category', data);
 }
 
-export interface idName {
-  id: number;
-  name: string;
+// 根据id删除分类 （请求体）
+export function deleteCategoryApi(data: Remove) {
+  return Service.delete('/api/categories', { data });
 }
 
-// 新增分类
-export function uploadAttachment(data: categoryType) {
-  return Service.post('/api/category', data); // 请求体
+// 根据id修改分类名称和封面 (url参数和请求体参数）
+export function updateCategoryApi(id: null | number, data: nameCoverType) {
+  return Service.put(`/api/category/${id}`, data);
 }
 
-// 获取附件列表 (请求头）
-export function getAttachment(params: QueryParams) {
-  return Service.get('/api/attachment', { params });
+// 获取分类列表 (请求头）
+export function getCategoryApi(params: QueryParams) {
+  return Service.get('/api/categories', { params });
 }
 
-// 根据id删除附件 （请求体）
-export function deleteAttachment(data: Remove) {
-  return Service.delete('/api/attachment', { data });
-}
-
-// 根据id修改附件名称
-export function updateAttachment(data: idName) {
-  return Service.put('/api/attachment', data);
+// 根据分类获取所有博客
+export function getCategoryBlogsApi(name: string) {
+  return Service.get(`/api/category/${name}`);
 }

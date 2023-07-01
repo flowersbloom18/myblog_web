@@ -254,7 +254,6 @@
   } from '@/api/attachment';
   import getFormatDate from '@/utils/date';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import axios from 'axios';
 
   const music = '/src/assets/images/attachment-music.png';
   const video = '/src/assets/images/attachment-video.png';

@@ -22,3 +22,18 @@ export default interface QueryParams {
 export interface Remove {
   id_list: number[];
 }
+
+// 分类、标签的名称和封面(create、update)
+export interface nameCoverType {
+  name: string;
+  cover: string;
+}
+
+// 表单渲染(分类、标签）
+export interface FormRecord {
+  id: number;
+  name: string;
+  cover: string;
+  created_at: string;
+  blog_num: number;
+}
