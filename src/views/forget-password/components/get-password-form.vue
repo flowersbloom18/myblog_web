@@ -162,7 +162,7 @@
     handleRegister();
   };
   const goToLogin = () => {
-    router.push('/console/login');
+    router.push('login');
   };
   const confirmSend = () => {
     if (!isTrue.value) {

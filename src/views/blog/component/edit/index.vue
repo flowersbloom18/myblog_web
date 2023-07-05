@@ -1,53 +1,14 @@
-<!--<template>-->
-<!--  <MdPreview :editor-id="id" :model-value="text" :theme="dark" />-->
-<!--  <MdCatalog :editor-id="id" :scroll-element="scrollElement" />-->
-<!--</template>-->
-
-<!--<script setup>-->
-<!--  import { ref } from 'vue';-->
-<!--  import { MdPreview, MdCatalog } from 'md-editor-v3';-->
-<!--  // preview.css相比style.css少了编辑器那部分样式-->
-<!--  import 'md-editor-v3/lib/preview.css';-->
-
-<!--  const id = 'preview-only';-->
-<!--  const text = ref('# Hello Editor');-->
-<!--  const scrollElement = document.documentElement;-->
-<!--</script>-->
-
-<!--
-失去焦点自动保存。
-
-onBlur
-类型：(event: FocusEvent) => void
-
-输入框失去焦点时触发事件。
-
-<template>
-  <MdEditor @onBlur="onBlur" />
-</template>
-
-<script setup>
-import { MdEditor } from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-const onBlur = (e) => {
-  console.log('onBlur', e);
-};
-</script>
-
-
--->
-
-<!--
 <template>
   <a-card :bordered="false" :style="{ width: '100%', marginBottom: '20px' }">
     <a-row>
       <a-col :span="2" style="line-height: 28px">
         <span style="font-size: 16px"> 编辑博客 </span>
       </a-col>
-      <a-col :span="2" offset="20">
+      <a-col :span="4" offset="18">
         <a-space>
-          <a-button type="primary" @click="onPublish">
+          <a-button @click="attachmentOpen">选择附件</a-button>
+          <a-button @click="back">返回</a-button>
+          <a-button @click="onPublish">
             <svg
               t="1688303853008"
               class="icon"
@@ -163,20 +124,49 @@ const onBlur = (e) => {
       </a-form-item>
     </a-form>
   </a-modal>
+
+  <!--attachment-->
+  <a-modal
+    v-model:visible="isOpen"
+    width="70%"
+    title="选择附件"
+    hide-cancel="true"
+    ok-text="取消"
+    @ok="handleOK3"
+  >
+    <Attachment />
+  </a-modal>
 </template>
 
 <script setup lang="ts">
   import sanitizeHtml from 'sanitize-html';
   import { MdEditor, ToolbarNames } from 'md-editor-v3';
   import 'md-editor-v3/lib/style.css';
-  import { getBlogDetailApi, updateBlogApi } from '@/api/blog';
+  import { getBlogContentApi, updateBlogApi } from '@/api/blog';
   import { reactive, ref, watch } from 'vue';
   import { useAppStore } from '@/store';
   import { getAttachment, uploadAttachment } from '@/api/attachment';
   import { getCategoryApi } from '@/api/category';
   import { Message } from '@arco-design/web-vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
+  import Attachment from '@/views/attachment/index.vue';
+
+  // 打开附件
+  const isOpen = ref(false);
+  const handleOK3 = () => {
+    // 关闭
+    isOpen.value = false;
+  };
+  const attachmentOpen = () => {
+    isOpen.value = true;
+  };
+
+  // 获取路由转来的参数
+  const route = useRoute();
+  const router = useRouter();
+  const id = ref('');
+  id.value = route.params.id as string;
 
   const defaultCover = ref('');
   defaultCover.value = '/src/assets/images/blog-default-cover.jpg';
@@ -240,7 +230,17 @@ const onBlur = (e) => {
 
   // 获取博客详情
   const getBlogDetail = async () => {
-    const { data } = await getBlogDetailApi('blog1');
+    const { data } = await getBlogContentApi(id.value);
+    // 如果数据不存在则定向到404
+    if (data.code) {
+      // 警告信息
+      Message.warning(data.msg);
+
+      // 跳转到404页面
+      await router.push({ name: '404' });
+      return;
+    }
+
     const response = data.data[0];
 
     // 写入表单
@@ -355,6 +355,11 @@ const onBlur = (e) => {
     }
   };
 
+  // 返回上一页
+  const back = () => {
+    router.back();
+  };
+
   // 更新数据
   const handleOk = async () => {
     // 1、使用set集合去除标签重复的选项
@@ -365,16 +370,6 @@ const onBlur = (e) => {
       visible.value = true;
     }
 
-    // Mounted() {
-    //   console.log('参数值：', this.$route.params.name);
-    // }
-    const route = useRoute();
-    console.log('route.params=', route.params.name);
-
-    const test = () => {
-      console.log('1234');
-    };
-    test();
     // 3、验证表单
     const state = await formRef.value?.validate();
     // 如果存在响应结果，则说明数据错误
@@ -388,7 +383,7 @@ const onBlur = (e) => {
       }
 
       // 开始提交
-      const res = await updateBlogApi('blog1', blogForm);
+      const res = await updateBlogApi(id.value, blogForm);
       // 判断是否成功
       if (res.data.code) {
         // 如果不为0则失败
@@ -414,6 +409,3 @@ const onBlur = (e) => {
     --md-bk-color: #333 !important;
   }
 </style>
-
--->
-<script setup lang="ts"></script>

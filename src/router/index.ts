@@ -63,7 +63,7 @@ const router = createRouter({
         {
           path: 'content',
           name: 'content',
-          redirect: '/console/content/blog',
+          redirect: '/console/content/blog/blog_list',
           meta: {
             locale: '博客相关',
             icon: 'icon-user',
@@ -73,12 +73,47 @@ const router = createRouter({
             {
               path: 'blog',
               name: 'blog',
-              component: () => import('@/views/user/list/index.vue'),
+              redirect: '/console/content/blog/blog_list',
               meta: {
                 locale: '博客',
                 requiresAuth: true,
                 roles: ['*'],
               },
+              children: [
+                {
+                  path: 'blog_list',
+                  name: 'blog_list',
+                  component: () => import('@/views/blog/index.vue'),
+                  meta: {
+                    locale: '博客列表',
+                    requiresAuth: true,
+                    roles: ['*'],
+                  },
+                },
+                {
+                  path: 'create_blog',
+                  name: 'create_blog',
+                  component: () =>
+                    import('@/views/blog/component/create/index.vue'),
+                  meta: {
+                    locale: '新增博客',
+                    requiresAuth: true,
+                    roles: ['*'],
+                  },
+                },
+                {
+                  path: 'edit_blog/:id',
+                  name: 'edit_blog',
+                  // 如果没有携带参数是否重定向
+                  component: () =>
+                    import('@/views/blog/component/edit/index.vue'),
+                  meta: {
+                    locale: '编辑博客',
+                    requiresAuth: true,
+                    roles: ['*'],
+                  },
+                },
+              ],
             },
             {
               path: 'category',
@@ -267,7 +302,7 @@ const router = createRouter({
           name: 'exception',
           redirect: '403',
           meta: {
-            locale: 'menu.exception',
+            locale: '异常',
             requiresAuth: true,
             icon: 'icon-exclamation-circle',
             order: 6,
@@ -278,7 +313,7 @@ const router = createRouter({
               name: '403',
               component: () => import('@/views/exception/403/index.vue'),
               meta: {
-                locale: 'menu.exception.403',
+                locale: '403',
                 requiresAuth: true,
                 // roles: ['admin'],
                 roles: ['*'],
@@ -289,7 +324,7 @@ const router = createRouter({
               name: '404',
               component: () => import('@/views/exception/404/index.vue'),
               meta: {
-                locale: 'menu.exception.404',
+                locale: '404',
                 requiresAuth: true,
                 roles: ['*'],
               },
@@ -299,7 +334,7 @@ const router = createRouter({
               name: '500',
               component: () => import('@/views/exception/500/index.vue'),
               meta: {
-                locale: 'menu.exception.500',
+                locale: '500',
                 requiresAuth: true,
                 roles: ['*'],
               },

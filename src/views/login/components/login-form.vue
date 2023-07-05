@@ -118,12 +118,12 @@
   };
   const goToRegister = () => {
     // 跳转到注册界面
-    router.push('/console/register');
+    router.push('register');
   };
 
   const goToForgetPassword = () => {
     // 跳转到忘记密码界面
-    router.push('/console/forgetPassword');
+    router.push('forgetPassword');
   };
   // 表单数据
   const userInfo = reactive({
@@ -164,12 +164,17 @@
       // 获取重定向的目标位置和查询参数
       const { redirect, ...othersQuery } = router.currentRoute.value.query;
 
-      router.push({
-        name: (redirect as string) || 'Workplace',
-        query: {
-          ...othersQuery,
-        },
-      });
+      // 编辑没有id
+      if (redirect === 'edit_blog') {
+        router.push({ name: 'dashboard' });
+      } else {
+        router.push({
+          name: (redirect as string) || 'dashboard',
+          query: {
+            ...othersQuery,
+          },
+        });
+      }
 
       isVerified.value = false; // 在登录信息输入错误后，需要重新验证表单。
       showSquare.value = false; // 此刻关闭。

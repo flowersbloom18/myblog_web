@@ -78,6 +78,7 @@
             width="100%"
             :src="renderData[rowIndex].cover"
             alt="封面不存在"
+            show-loader
           />
           <a-image
             v-else
@@ -85,6 +86,7 @@
             width="100%"
             :src="defaultCover"
             alt="封面不存在"
+            show-loader
           />
         </template>
         <!--配合插槽来使用-->

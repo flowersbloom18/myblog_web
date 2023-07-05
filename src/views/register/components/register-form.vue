@@ -145,7 +145,7 @@
     handleRegister();
   };
   const goToLogin = () => {
-    router.push('/console/login');
+    router.push('login');
   };
   // 表单数据
   const userInfo = reactive({

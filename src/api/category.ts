@@ -17,7 +17,7 @@ export function updateCategoryApi(id: null | number, data: nameCoverType) {
 }
 
 // 获取分类列表 (请求头）
-export function getCategoryApi(params: QueryParams) {
+export function getCategoryApi(params?: QueryParams) {
   return Service.get('/api/categories', { params });
 }
 

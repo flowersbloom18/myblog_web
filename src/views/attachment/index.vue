@@ -55,121 +55,127 @@
     </a-row>
   </a-card>
 
-  <a-card :bordered="false">
-    <a-card-grid
-      v-for="(value, key) in renderData"
-      :key="key"
-      :style="{ width: '24%', margin: '0 10px 10px 0' }"
-    >
-      <a-card>
-        <div class="name"> <icon-file />&nbsp;&nbsp;{{ value.name }} </div>
-        <a-row class="grid-demo" justify="start">
-          <a-col :span="4"></a-col>
-          <a-col :span="8">
-            <a-button type="primary" status="success" @click="getDetail(value)">
-              <template #icon>
-                <icon-find-replace />
-              </template>
-              详情
-            </a-button>
-          </a-col>
-          <a-col :span="8">
-            <a-popconfirm
-              content="确认删除吗?"
-              type="warning"
-              ok-text="确认"
-              cancel-text="取消"
-              @ok="deleteDetail(value)"
-            >
-              <a-button type="primary" status="danger">
+  <!--loading-->
+  <a-spin
+    v-show="loading"
+    style="height: 200px; width: 100%; padding: 80px"
+    :loading="loading"
+    tip="数据正在加载中..."
+  ></a-spin>
+  <!--empty-->
+  <a-card v-show="empty" style="height: 200px; width: 100%; padding: 30px"
+    ><a-empty
+  /></a-card>
+  <!--exist-->
+  <a-card v-show="!empty">
+    <a-card :bordered="false">
+      <a-card-grid
+        v-for="(value, key) in renderData"
+        :key="key"
+        :style="{ width: '24%', margin: '0 10px 10px 0' }"
+      >
+        <a-card :bordered="false">
+          <div> <icon-folder />&nbsp;&nbsp;{{ value.name }} </div>
+          <a-row justify="start" style="margin-top: 10px">
+            <a-col :span="4"></a-col>
+            <a-col :span="8">
+              <a-button
+                type="primary"
+                status="success"
+                @click="getDetail(value)"
+              >
                 <template #icon>
-                  <icon-delete />
+                  <icon-find-replace />
                 </template>
-                删除
+                详情
               </a-button>
-            </a-popconfirm>
-          </a-col>
-          <a-col :span="4"></a-col>
-        </a-row>
+            </a-col>
+            <a-col :span="8">
+              <a-popconfirm
+                content="确认删除吗?"
+                type="warning"
+                ok-text="确认"
+                cancel-text="取消"
+                @ok="deleteDetail(value)"
+              >
+                <a-button type="primary" status="danger">
+                  <template #icon>
+                    <icon-delete />
+                  </template>
+                  删除
+                </a-button>
+              </a-popconfirm>
+            </a-col>
+            <a-col :span="4"></a-col>
+          </a-row>
 
-        <!--根据不同类型渲染不同内容-->
-        <template #cover>
-          <span v-if="value.type.includes('image')">
-            <div class="actions">
-              <a-tag color="arcoblue">
-                <template #icon>
-                  <icon-image />
-                </template>
-                图片
-              </a-tag>
-            </div>
+          <!--根据不同类型渲染不同内容-->
+          <template #cover>
+            <span v-if="value.type.includes('image')">
+              <div class="actions">
+                <a-tag color="arcoblue">
+                  <template #icon>
+                    <icon-image />
+                  </template>
+                  图片
+                </a-tag>
+              </div>
+              <img
+                :src="`/${value.url}`"
+                alt="图片不存在"
+                style="width: 100%; height: 200px"
+              />
+            </span>
 
-            <a-image
-              width="100%"
-              height="200px"
-              alt="图片不存在"
-              :src="`/${value.url}`"
-              fit="cover"
-              show-loader
-            >
-            </a-image>
-          </span>
-
-          <span v-else-if="value.type.includes('audio')">
-            <div class="actions">
-              <a-tag color="arcoblue">
-                <template #icon>
-                  <icon-music />
-                </template>
-                音乐
-              </a-tag>
-            </div>
-
-            <a-image
-              alt="图片不存在1"
-              width="100%"
-              height="200px"
-              :src="music"
-              fit="cover"
-              show-loader
-            />
-          </span>
-          <span v-else-if="value.type.includes('video')">
-            <div class="actions">
-              <a-tag color="arcoblue">
-                <template #icon>
-                  <icon-file-video />
-                </template>
-                视频
-              </a-tag>
-            </div>
-            <a-image
-              width="100%"
-              height="200px"
-              alt="图片不存在2"
-              :src="video"
-              fit="cover"
-              show-loader
-            />
-          </span>
-        </template>
-      </a-card>
-    </a-card-grid>
-  </a-card>
-  <!--分页信息-->
-  <a-card :bordered="false">
-    <a-space direction="vertical" fill="true" size="large" align="center">
-      <div style="height: 10px"></div>
-      <a-pagination
-        v-model:page-size="params.limit"
-        v-model:current="params.page"
-        :total="total"
-        show-total
-        size="medium"
-        @change="changePage"
-        @page-size-change="changeLimit"
-      />
-    </a-space>
+            <span v-else-if="value.type.includes('audio')">
+              <div class="actions">
+                <a-tag color="arcoblue">
+                  <template #icon>
+                    <icon-music />
+                  </template>
+                  音乐
+                </a-tag>
+              </div>
+              <img
+                :src="music"
+                alt="图片不存在1"
+                style="width: 100%; height: 200px"
+              />
+            </span>
+            <span v-else-if="value.type.includes('video')">
+              <div class="actions">
+                <a-tag color="arcoblue">
+                  <template #icon>
+                    <icon-file-video />
+                  </template>
+                  视频
+                </a-tag>
+              </div>
+              <img
+                :src="video"
+                alt="图片不存在2"
+                style="width: 100%; height: 200px"
+              />
+            </span>
+          </template>
+        </a-card>
+      </a-card-grid>
+    </a-card>
+    <!--      分页信息-->
+    <a-card v-show="!loading" :bordered="false">
+      <a-space direction="vertical" fill="true" size="large" align="center">
+        <div style="height: 10px"></div>
+        <a-pagination
+          v-model:page-size="params.limit"
+          v-model:current="params.page"
+          :total="total"
+          show-total
+          size="medium"
+          @change="changePage"
+          @page-size-change="changeLimit"
+        />
+      </a-space>
+    </a-card>
   </a-card>
 
   <!--抽屉-->
@@ -182,8 +188,16 @@
     @cancel="handleCancel"
   >
     <template #title> 附件详情</template>
-    <div>
-      <img v-if="isImage" class="attachment" :src="detail[2].value" alt="" />
+    <div style="margin-bottom: 20px">
+      <a-image
+        v-if="isImage"
+        width="100%"
+        height="300px"
+        class="attachment"
+        :src="detail[2].value"
+        alt="图片不存在"
+      />
+
       <video
         v-else
         class="attachment"
@@ -243,7 +257,7 @@
 </template>
 <script setup lang="ts">
   import QueryParams, { Remove } from '@/types/global';
-  import { reactive, ref } from 'vue';
+  import { reactive, ref, watch } from 'vue';
   import { Message } from '@arco-design/web-vue';
   import {
     deleteAttachment,
@@ -274,14 +288,32 @@
   // 复制的时候需要，针对本地文件
   const fullUrl = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;
 
+  // 数据加载中
+  const loading = ref(true);
+  // 数据不存在
+  const empty = ref(false);
+
   // 获取数据
   const getData = async () => {
     try {
       const response = await getAttachment(params);
       const { data } = response.data;
 
+      // // 首先进行加载，关闭空组件
+      // loading.value = false;
+      // empty.value = false;
+
       total.value = data.count;
       renderData.value = data.list;
+
+      // 如果数据存在，则获取数据。
+      if (total.value !== 0) {
+        loading.value = false;
+        empty.value = false;
+      } else {
+        empty.value = true;
+        loading.value = false;
+      }
     } catch (err) {
       Message.error('数据获取出错！');
     }
@@ -375,10 +407,18 @@
     form.name = value.name;
   };
 
+  // 将抽屉跟 图片或音视频组件相互绑定，保证每次加载正确组件。
+  watch(visible, () => {
+    if (!visible.value) {
+      isImage.value = false;
+    }
+  });
+
   // 发送修改数据
   const handleOk2 = async () => {
     // 表单校验
     const state = await formRef.value?.validate();
+
     // 如果存在响应结果，则说明数据错误
     if (state) {
       visible2.value = true; // 目前无法解决，一出现错误，表格自动关闭，所以干脆直接开启。
@@ -520,9 +560,5 @@
     left: 10px;
     top: 10px;
     z-index: 99;
-  }
-
-  .name {
-    //height: 20px; font-size: 16px; margin-bottom: 6px;
   }
 </style>

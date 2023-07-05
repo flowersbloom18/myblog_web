@@ -13,7 +13,7 @@ declare module 'vue' {
 export default interface QueryParams {
   page: number;
   limit: number;
-  key: string;
+  key?: string;
   role?: string | null;
   image_type?: number | null;
 }
@@ -37,3 +37,25 @@ export interface FormRecord {
   created_at: string;
   blog_num: number;
 }
+
+// 标签的随机颜色
+export const Colors = [
+  'orangered',
+  'blue',
+  'purple',
+  'arcoblue',
+  'green',
+  'orange',
+  'gold',
+  'lime',
+  'cyan',
+  'pinkpurple',
+  'magenta',
+  'gray',
+];
+
+// 产生随机的颜色
+export const RandomColor = () => {
+  const randomIndex = Math.floor(Math.random() * Colors.length);
+  return Colors[randomIndex];
+};

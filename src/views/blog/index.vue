@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-card class="general-card" title="标签">
+    <a-card class="general-card" title="博客列表">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -11,8 +11,8 @@
           >
             <a-row :gutter="12">
               <a-col :span="6">
-                <a-form-item field="key" label="查询标签">
-                  <a-input v-model="page.key" placeholder="请输入标签名称" />
+                <a-form-item field="key" label="查询博客">
+                  <a-input v-model="page.key" placeholder="请输入博客的标题" />
                 </a-form-item>
               </a-col>
             </a-row>
@@ -41,23 +41,16 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary" @click="addtag">
+            <a-button type="primary" @click="addBlog">
               <template #icon>
                 <icon-plus />
               </template>
-              新增标签
+              新增博客
             </a-button>
             <a-button type="primary" status="danger" @click="deleteAll"
               >批量删除
             </a-button>
           </a-space>
-        </a-col>
-        <a-col :span="12">
-          <div style="float: right">
-            <a-button type="primary" @click="attachmentOpen"
-              >选择附件
-            </a-button>
-          </div>
         </a-col>
       </a-row>
 
@@ -71,33 +64,102 @@
         row-key="id"
         :row-selection="rowSelection"
       >
+        <!--配合插槽来使用，处理特殊列-->
+        <template #read_num="{ rowIndex }">
+          <a-space direction="vertical">
+            <span>
+              <a-space>
+                <template #split>
+                  <a-divider direction="vertical" />
+                </template>
+                <a-space>
+                  <icon-eye /> {{ renderData[rowIndex].read_num }}
+                </a-space>
+                <a-space>
+                  <icon-message />{{ renderData[rowIndex].comment_num }}
+                </a-space>
+              </a-space>
+            </span>
+            <span>
+              <a-space>
+                <template #split>
+                  <a-divider direction="vertical" />
+                </template>
+
+                <a-space>
+                  <icon-thumb-up />{{ renderData[rowIndex].like_num }}
+                </a-space>
+                <a-space>
+                  <icon-star />{{ renderData[rowIndex].collect_num }}
+                </a-space>
+              </a-space>
+            </span>
+          </a-space>
+          <a-space> </a-space>
+        </template>
+
+        <template #is_publish="{ rowIndex }">
+          <a-switch v-model="renderData[rowIndex].is_publish" disabled>
+            <template #checked-icon>
+              <icon-check />
+            </template>
+            <template #unchecked-icon>
+              <icon-close />
+            </template>
+          </a-switch>
+        </template>
+
+        <template #is_top="{ rowIndex }">
+          <a-switch v-model="renderData[rowIndex].is_top" disabled>
+            <template #checked-icon>
+              <icon-check />
+            </template>
+            <template #unchecked-icon>
+              <icon-close />
+            </template>
+          </a-switch>
+        </template>
+
+        <template #tags="{ rowIndex }">
+          <a-space wrap>
+            <!--这里如果使用随机函数会出现，函数随着左右侧滑动频繁调用的情况，暂时改为此-->
+            <a-tag
+              v-for="(value, index) in renderData[rowIndex].tags"
+              :key="index"
+              immediate
+              :color="Colors[index]"
+              >{{ value }}</a-tag
+            >
+          </a-space>
+        </template>
+
+        <template #link="{ rowIndex }">
+          <a-link icon @click="linkSkip(renderData[rowIndex].link)"
+            >点击跳转
+          </a-link>
+        </template>
+
         <template #cover="{ rowIndex }">
           <a-image
             v-if="renderData[rowIndex].cover"
-            height="80px"
-            width="100%"
+            height="100%"
+            width="100px"
             :src="renderData[rowIndex].cover"
             alt="封面不存在"
             show-loader
           />
           <a-image
             v-else
-            height="80px"
-            width="100%"
+            height="100%"
+            width="100px"
             :src="defaultCover"
             alt="封面不存在"
             show-loader
           />
         </template>
-        <!--配合插槽来使用-->
+
         <template #created_at="{ rowIndex }">
           <span>{{ getFormatDate(renderData[rowIndex].created_at) }}</span>
-        </template>
-
-        <template #tag="{ rowIndex }">
-          <a-tag :color="RandomColor()" bordered
-            >{{ renderData[rowIndex].name }}
-          </a-tag>
         </template>
 
         <template #operation="{ rowIndex }">
@@ -136,102 +198,21 @@
       </a-space>
     </a-card>
   </div>
-  <!--  弹出层表单【编辑】-->
-  <!-- update -->
-  <a-modal
-    v-model:visible="visible"
-    title="修改标签"
-    @cancel="handleCancel"
-    @ok="handleOk"
-  >
-    <a-form ref="formRef" :model="form">
-      <a-form-item
-        field="name"
-        label="标签名称"
-        :rules="[{ required: true, message: '请输入标签名称' }]"
-        :validate-trigger="['change', 'blur']"
-      >
-        <a-input v-model="form.name" placeholder="请输入标签名称" />
-      </a-form-item>
-    </a-form>
-
-    <a-form :model="form">
-      <a-form-item field="cover" label="封面">
-        <a-input v-model="form.cover" placeholder="请输入封面" allow-clear />
-      </a-form-item>
-    </a-form>
-  </a-modal>
-  <!--  add -->
-  <a-modal
-    v-model:visible="visible2"
-    title="新增标签"
-    @cancel="handleCancel2"
-    @ok="handleOk2"
-  >
-    <a-form ref="formRef" :model="tagForm" auto-label-width class="a-form">
-      <a-form-item
-        field="name"
-        label="标签名称"
-        :rules="[{ required: true, message: '请输入标签名称' }]"
-        :validate-trigger="['change', 'blur']"
-      >
-        <a-input v-model="tagForm.name" placeholder="请输入标签名称" />
-      </a-form-item>
-
-      <a-form-item field="cover" label="封面">
-        <a-input v-model="tagForm.cover" placeholder="请输入封面" allow-clear />
-      </a-form-item>
-    </a-form>
-  </a-modal>
-  <!--attachment-->
-  <a-modal
-    v-model:visible="isOpen"
-    width="70%"
-    title="选择附件"
-    hide-cancel="true"
-    ok-text="取消"
-    @ok="handleOK3"
-  >
-    <Attachment />
-  </a-modal>
 </template>
 
 <script lang="ts" setup>
-  import Attachment from '@/views/attachment/index.vue';
-  import { computed, reactive, ref, UnwrapRef } from 'vue';
+  import { reactive, ref, UnwrapRef } from 'vue';
   import {
     TableColumnData,
     TableRowSelection,
   } from '@arco-design/web-vue/es/table/interface';
   import { Message } from '@arco-design/web-vue';
   import getFormatDate from '@/utils/date';
-  import QueryParams, {
-    FormRecord,
-    nameCoverType,
-    Remove,
-  } from '@/types/global';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
-  import {
-    createTagApi,
-    deleteTagApi,
-    getTagApi,
-    updateTagApi,
-  } from '@/api/tag';
-  import { RandomColor } from '@/types/global';
+  import QueryParams, { Remove, Colors } from '@/types/global';
+  import { blogList, deleteBlogApi, getBlogApi } from '@/api/blog';
+  import { useRouter } from 'vue-router';
 
-  // 打开附件
-  const isOpen = ref(false);
-  const handleOK3 = () => {
-    isOpen.value = false;
-  };
-  const attachmentOpen = () => {
-    isOpen.value = true;
-  };
-  // 修改表单
-  const form: nameCoverType = reactive({
-    name: '',
-    cover: '',
-  });
+  const router = useRouter();
 
   // 默认封面
   const defaultCover = ref('');
@@ -243,24 +224,25 @@
     key: '', // 模糊查询
   });
 
-  // 创建标签
-  const tagForm: nameCoverType = reactive({
-    name: '',
-    cover: '',
-  });
-
   const scroll = {
-    x: 1360,
+    x: 1500,
     // y: 200,
   };
   const columns: TableColumnData[] = [
     {
-      title: '标签名称',
-      dataIndex: 'name',
+      title: '标题',
+      dataIndex: 'title',
       fixed: 'left',
       align: 'center',
-      slotName: 'tag',
-      width: 100,
+      width: 200,
+    },
+    {
+      title: '摘要',
+      dataIndex: 'abstract',
+      align: 'center',
+      ellipsis: true, // 省略超出的文本
+      tooltip: true, // 鼠标经过显示省略的文本
+      width: 200,
     },
     {
       title: '封面',
@@ -270,12 +252,56 @@
       width: 100,
     },
     {
-      title: '博客数量',
-      dataIndex: 'blog_num',
+      title: '作者',
+      dataIndex: 'author',
       align: 'center',
-      slotName: 'blog_num',
       width: 100,
     },
+
+    {
+      title: '分类',
+      dataIndex: 'category',
+      align: 'center',
+      width: 100,
+    },
+    {
+      title: '标签',
+      dataIndex: 'tags',
+      align: 'center',
+      slotName: 'tags',
+      width: 200,
+    },
+    {
+      title: '相关数据',
+      dataIndex: 'read_num',
+      align: 'center',
+      slotName: 'read_num',
+      width: 180,
+    },
+    {
+      title: '是否发布',
+      dataIndex: 'is_publish',
+      align: 'center',
+      slotName: 'is_publish',
+      width: 100,
+    },
+    {
+      title: '是否置顶',
+      dataIndex: 'is_top',
+      align: 'center',
+      slotName: 'is_top',
+      width: 100,
+    },
+
+    {
+      title: '链接',
+      dataIndex: 'link',
+      fixed: 'right',
+      align: 'center',
+      slotName: 'link',
+      width: 150,
+    },
+
     {
       title: '创建时间',
       dataIndex: 'created_at',
@@ -293,59 +319,30 @@
       slotName: 'operation',
     },
   ];
-  const renderData = ref<FormRecord[]>([]);
 
-  // 标签id
-  const id = ref(null);
-  // 编辑表单
-  const visible = ref(false);
-  // 新增表单
-  const visible2 = ref(false);
-  // 表单校验
-  const formRef = ref<FormInstance>();
+  const renderData = ref<blogList[]>([]);
 
+  // 链接跳转
+  const linkSkip = (link: any) => {
+    // 路由跳转了那么博客也随之出现吗？
+    router.push(`/${link}`);
+  };
   // 编辑表单
   const edit = (data: any) => {
-    visible.value = true;
-    // 存储数据
-    id.value = data.id;
-    form.name = data.name;
-    form.cover = data.cover;
-  };
-  // 编辑表单取消
-  const handleCancel = () => {
-    visible.value = false;
-  };
-  // 编辑表单提交
-  const handleOk = async () => {
-    // 表单校验
-    const state = await formRef.value?.validate();
-    // 如果存在响应结果，则说明数据错误
-    if (state) {
-      visible.value = true; // 目前无法解决，一出现错误，表格自动关闭，所以干脆直接开启。
-      Message.warning('请输入完整信息！');
-    } else {
-      // 标签id的获取
-      const data = await updateTagApi(id.value, form);
-      if (data.data.code) {
-        Message.error(data.data.msg);
-        return;
-      }
-      Message.success(data.data.msg);
-
-      // eslint-disable-next-line no-use-before-define
-      await getData();
-    }
+    router.push({
+      name: 'edit_blog',
+      params: { id: data.id },
+    });
   };
 
   const idList: Remove = reactive({
     id_list: [],
   });
-  // 删除用户
+  // 删除
   const isDelete = async (list: number) => {
     idList.id_list[idList.id_list.length] = list;
 
-    const data = await deleteTagApi(idList);
+    const data = await deleteBlogApi(idList);
 
     if (data.data.code) {
       Message.error(data.data.msg);
@@ -358,40 +355,9 @@
     await getData();
   };
 
-  // 管理员创建标签
-  const addtag = () => {
-    // 展示表单
-    visible2.value = true;
-  };
-  // 创建用户取消
-  const handleCancel2 = () => {
-    // 关闭并清空表单。
-    visible2.value = false;
-    tagForm.name = '';
-    tagForm.cover = '';
-  };
-  // 创建标签提交
-  const handleOk2 = async () => {
-    // 表单校验
-    const state = await formRef.value?.validate();
-    // 如果存在响应结果，则说明数据错误
-    if (state) {
-      visible2.value = true; // 目前无法解决，一出现错误，表格自动关闭，所以干脆直接开启。
-      Message.warning('请输入完整信息！');
-    } else {
-      const data = await createTagApi(tagForm);
-      if (data.data.code) {
-        Message.error(data.data.msg);
-        tagForm.name = '';
-        tagForm.cover = '';
-        return;
-      }
-      Message.success(data.data.msg);
-      tagForm.name = '';
-      tagForm.cover = '';
-      // eslint-disable-next-line no-use-before-define
-      await getData();
-    }
+  // 管理员创建博客
+  const addBlog = () => {
+    router.push({ name: 'create_blog' });
   };
 
   // 总共几条数据
@@ -401,19 +367,11 @@
   const getData = async () => {
     try {
       // page limit
-      const { data } = await getTagApi(page);
-      let result = data.data.list;
+      const { data } = await getBlogApi(page);
       // 获取信息总条数，
       total.value = data.data.count;
 
-      // 将数据结构合并到新对象
-      result = result.map((item: { tag: any; blog_num: number }) => ({
-        // key: item.user.id,
-        ...item.tag,
-        blog_num: item.blog_num,
-      }));
-      data.list = result;
-      renderData.value = data.list;
+      renderData.value = data.data.list;
     } catch (err) {
       // 一般错误都为序列化失败，说明登录过期了。
       // 还有可能是其它错误
@@ -447,7 +405,7 @@
       return;
     }
     // request
-    const data = await deleteTagApi({ id_list: selectedKeys.value });
+    const data = await deleteBlogApi({ id_list: selectedKeys.value });
     if (data.data.code) {
       Message.warning(data.data.msg);
       selectedKeys.value = []; // 清空表单。
@@ -471,12 +429,6 @@
     getData();
   };
 </script>
-
-<!--<script lang="ts">-->
-<!--  export default {-->
-<!--    name: 'SearchTable',-->
-<!--  };-->
-<!--</script>-->
 
 <style scoped lang="less">
   .a-table {

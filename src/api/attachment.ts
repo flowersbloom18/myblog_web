@@ -25,7 +25,7 @@ export function updateAttachment(data: idName) {
 // 上传附件
 export function uploadAttachment(
   formData: any,
-  config: AxiosRequestConfig<any> | undefined
+  config?: AxiosRequestConfig<any> | undefined
 ) {
   return Service.post('/api/attachment', formData, config);
 }

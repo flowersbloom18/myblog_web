@@ -43,30 +43,30 @@
     @ok="handleOk"
   >
     <a-form ref="formRef" :model="form">
-      <a-form-item field="old_pwd" label="旧密码">
-        <a-input-password
-          v-model="form.old_pwd"
-          placeholder="请输入旧密码"
-          :rules="[
-            {
-              required: true,
-              message: '请输入旧密码',
-            },
-          ]"
-        />
+      <a-form-item
+        field="old_pwd"
+        label="旧密码"
+        :rules="[
+          {
+            required: true,
+            message: '请输入旧密码',
+          },
+        ]"
+      >
+        <a-input-password v-model="form.old_pwd" placeholder="请输入旧密码" />
       </a-form-item>
 
-      <a-form-item field="pwd" label="新密码">
-        <a-input-password
-          v-model="form.pwd"
-          placeholder="请输入新密码"
-          :rules="[
-            {
-              required: true,
-              message: '请输入新密码',
-            },
-          ]"
-        />
+      <a-form-item
+        field="pwd"
+        label="新密码"
+        :rules="[
+          {
+            required: true,
+            message: '请输入新密码',
+          },
+        ]"
+      >
+        <a-input-password v-model="form.pwd" placeholder="请输入新密码" />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -81,36 +81,36 @@
       <span style="margin: 0px auto 5px; color: rgb(var(--red-6))">{{
         msg
       }}</span>
-      <a-form-item field="email" label="邮箱">
-        <a-input
-          v-model="form2.email"
-          placeholder="请输入邮箱"
-          :rules="[
-            {
-              required: true,
-              message: '请输入邮箱',
-            },
-          ]"
-        />
+      <a-form-item
+        field="email"
+        label="邮箱"
+        :rules="[
+          {
+            required: true,
+            message: '请输入邮箱',
+          },
+        ]"
+      >
+        <a-input v-model="form2.email" placeholder="请输入邮箱" />
       </a-form-item>
 
-      <a-form-item field="code" label="验证码">
-        <a-input-password
-          v-model="form2.code"
-          placeholder="请输入验证码"
-          :rules="[
-            {
-              required: true,
-              message: '请输入验证码',
-            },
-          ]"
-        />
+      <a-form-item
+        field="code"
+        label="验证码"
+        :rules="[
+          {
+            required: true,
+            message: '请输入验证码',
+          },
+        ]"
+      >
+        <a-input-password v-model="form2.code" placeholder="请输入验证码" />
         <Code
           v-if="email2"
           :is-true="isTrue"
           :email2="email2"
           :case="2"
-          @click="confirmSend"
+          @cli="confirmSend"
         />
       </a-form-item>
     </a-form>
@@ -193,13 +193,14 @@
       if (res.data.code) {
         // 如果不为0则失败
         Message.error(res.data.msg);
+        visible.value = true;
+      } else {
         visible.value = false;
-        return;
-      }
-      // 清理token
-      localStorage.removeItem('userInfo');
+        Message.success(res.data.msg);
 
-      Message.success(res.data.msg);
+        // 清理token
+        localStorage.removeItem('userInfo');
+      }
     }
   };
   const handleOk2 = async () => {
@@ -216,10 +217,11 @@
       if (res.data.code) {
         // 如果不为0则失败
         Message.error(res.data.msg);
+        visible2.value = true;
+      } else {
         visible2.value = false;
-        return;
+        Message.success(res.data.msg);
       }
-      Message.success(res.data.msg);
     }
   };
 

@@ -15,7 +15,7 @@
 
         <!--配合插槽来使用-->
         <template #link="{ rowIndex }">
-          <a-link icon @click="link(renderData[rowIndex].link)"
+          <a-link icon @click="linkSkip(renderData[rowIndex].link)"
             >点击跳转
           </a-link>
         </template>
@@ -131,8 +131,7 @@
     await fetchData();
   };
 
-  // eslint-disable-next-line no-shadow
-  const link = (link: any) => {
+  const linkSkip = (link: any) => {
     // 路由跳转了那么博客也随之出现吗？
     router.push(`/${link}`);
   };

@@ -119,10 +119,7 @@
   const getData = async () => {
     try {
       const res = await getUserInfo();
-      console.log('basic-info');
-      //
-      // eslint-disable-next-line no-console
-      // console.log('res=', res);
+
       if (!res.data.code) {
         data.value[0].value = res.data.data.user_name;
         data.value[1].value = res.data.data.nick_name;

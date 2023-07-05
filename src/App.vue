@@ -1,7 +1,6 @@
 <template>
   <a-config-provider :locale="locale">
     <router-view />
-    <global-setting />
   </a-config-provider>
 </template>
 
