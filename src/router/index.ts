@@ -267,7 +267,7 @@ const router = createRouter({
             {
               path: 'announcement',
               name: 'announcement',
-              component: () => import('@/views/user/list/index.vue'),
+              component: () => import('@/views/announcement/index.vue'),
               meta: {
                 locale: '系统公告',
                 requiresAuth: true,
