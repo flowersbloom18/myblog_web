@@ -48,11 +48,11 @@
         :rules="[
           {
             required: true,
-            message: '请输入用户邮箱',
+            message: '请输入头像链接',
           },
         ]"
       >
-        <a-input v-model="form.avatar" placeholder="请输入你的头像" />
+        <a-input v-model="form.avatar" placeholder="请输入头像链接" />
       </a-form-item>
     </a-form>
   </a-modal>

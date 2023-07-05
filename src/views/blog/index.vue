@@ -183,7 +183,7 @@
         </template>
       </a-table>
       <!--分页信息-->
-      <a-space direction="vertical" size="large" align="center">
+      <a-space direction="vertical" fill="true" size="large" align="center">
         <div style="height: 10px"></div>
         <a-pagination
           v-model:page-size="page.limit"

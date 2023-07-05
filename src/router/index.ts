@@ -234,7 +234,7 @@ const router = createRouter({
             {
               path: 'friend-link',
               name: 'friend-link',
-              component: () => import('@/views/user/collect/index.vue'),
+              component: () => import('@/views/friend-link/index.vue'),
               meta: {
                 locale: '友链',
                 requiresAuth: true,
