@@ -77,7 +77,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, inject } from 'vue';
+  import { computed } from 'vue';
   import { useDark, useToggle, useFullscreen } from '@vueuse/core';
   import { useAppStore, useUserStore } from '@/store';
   import useUser from '@/hooks/user';
@@ -92,7 +92,6 @@
   const theme = computed(() => {
     return appStore.theme;
   });
-  const topMenu = computed(() => appStore.topMenu && appStore.menu);
   const isDark = useDark({
     selector: 'body',
     attribute: 'arco-theme',
@@ -111,8 +110,6 @@
   const handleLogout = () => {
     logout();
   };
-
-  const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
 </script>
 
 <style scoped lang="less">

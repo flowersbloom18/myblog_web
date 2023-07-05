@@ -41,7 +41,6 @@
     v-model="blogForm.content"
     style="height: 70vmin"
     :theme="theme1"
-    :sanitize="sanitize"
     preview-theme="default"
     code-theme="atom"
     show-code-row-number="true"
@@ -139,7 +138,6 @@
 </template>
 
 <script setup lang="ts">
-  import sanitizeHtml from 'sanitize-html';
   import { MdEditor, ToolbarNames } from 'md-editor-v3';
   import 'md-editor-v3/lib/style.css';
   import { createBlogApi } from '@/api/blog';
@@ -179,11 +177,6 @@
   });
   // 表单最后的校验
   const formRef = ref<FormInstance>();
-
-  // 防止xss攻击
-  const sanitize = (html: any) => {
-    return sanitizeHtml(html);
-  };
 
   const appStore = useAppStore();
   // 编辑器的主题颜色

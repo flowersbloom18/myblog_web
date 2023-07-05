@@ -244,7 +244,7 @@ const router = createRouter({
             {
               path: 'about',
               name: 'about',
-              component: () => import('@/views/user/collect/index.vue'),
+              component: () => import('@/views/about/index.vue'),
               meta: {
                 locale: '关于',
                 requiresAuth: true,
