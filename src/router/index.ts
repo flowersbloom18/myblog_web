@@ -224,7 +224,7 @@ const router = createRouter({
             {
               path: 'music',
               name: 'music',
-              component: () => import('@/views/user/info/index.vue'),
+              component: () => import('@/views/music/index.vue'),
               meta: {
                 locale: '音乐',
                 requiresAuth: true,
