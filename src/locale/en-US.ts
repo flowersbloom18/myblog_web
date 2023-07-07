@@ -2,9 +2,7 @@ import localeLogin from '@/views/login/locale/en-US';
 import localeRegister from '@/views/register/locale/en-US';
 import localeForget from '@/views/forget-password/locale/en-US';
 
-import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
-
-import localeMonitor from '@/views/dashboard/monitor/locale/en-US';
+import localeWorkplace from '@/views/dashboard/locale/en-US';
 
 import localeSuccess from '@/views/result/success/locale/en-US';
 import localeError from '@/views/result/error/locale/en-US';
@@ -39,7 +37,6 @@ export default {
   ...localeForget,
   ...localeWorkplace,
 
-  ...localeMonitor,
   ...localeSuccess,
   ...localeError,
   ...locale403,

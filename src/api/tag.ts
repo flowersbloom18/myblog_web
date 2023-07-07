@@ -17,7 +17,7 @@ export function updateTagApi(id: null | number, data: nameCoverType) {
 }
 
 // 获取标签列表 (请求头）
-export function getTagApi(params: QueryParams) {
+export function getTagApi(params?: QueryParams) {
   return Service.get('/api/tags', { params });
 }
 

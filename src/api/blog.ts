@@ -54,13 +54,18 @@ export function updateBlogApi(id: string | null, data: blogFormType) {
 }
 
 // 获取博客列表 (请求头）
-export function getBlogApi(params: QueryParams) {
+export function getBlogApi(params?: QueryParams) {
   return Service.get('/api/blogs', { params });
 }
 
 // 获取博客详情 (请求头）根据博客link--前台
 export function getBlogDetailApi(link: string | null) {
   return Service.get(`/api/blog/detail/${link}`);
+}
+
+// 获取博客总浏览量
+export function getBlogViewsApi() {
+  return Service.get('/api/blog/views');
 }
 
 // 获取博客详情 (请求头）根据博客id--后台

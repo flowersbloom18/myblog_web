@@ -385,7 +385,10 @@
         visible.value = false;
       } else {
         Message.success(res.data.msg);
-        await getBlogDetail();
+        // 返回博客列表页面
+        await router.push({ name: 'blog_list' });
+        // 更新就返回了，不在此页面久留
+        // await getBlogDetail();
       }
     }
   };

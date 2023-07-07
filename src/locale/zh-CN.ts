@@ -2,9 +2,7 @@ import localeLogin from '@/views/login/locale/zh-CN';
 import localeRegister from '@/views/register/locale/zh-CN';
 import localeForget from '@/views/forget-password/locale/zh-CN';
 
-import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
-
-import localeMonitor from '@/views/dashboard/monitor/locale/zh-CN';
+import localeWorkplace from '@/views/dashboard/locale/zh-CN';
 
 import localeSuccess from '@/views/result/success/locale/zh-CN';
 import localeError from '@/views/result/error/locale/zh-CN';
@@ -39,7 +37,6 @@ export default {
   ...localeForget,
   ...localeWorkplace,
 
-  ...localeMonitor,
   ...localeSuccess,
   ...localeError,
   ...locale403,

@@ -68,8 +68,8 @@
   const handleNotification = () => {
     Notification.info({
       title: '系统提示',
-      content: '公告内容需要简单明了，仅输入文字即可!',
-      duration: 10000,
+      content: '公告内容需要简单明了，输入文字内容即可!',
+      duration: 5000,
       closable: true,
     });
   };

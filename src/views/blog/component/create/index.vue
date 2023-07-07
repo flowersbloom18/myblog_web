@@ -354,6 +354,8 @@
         visible.value = false;
       } else {
         Message.success(res.data.msg);
+
+        // 返回博客列表页面
         await router.push({ name: 'blog_list' });
       }
     }

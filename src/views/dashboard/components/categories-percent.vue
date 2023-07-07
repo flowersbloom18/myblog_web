@@ -1,13 +1,16 @@
 <template>
   <a-card>
-    <h2 style="margin-left: 20px">标签下的博客数占比</h2>
-
-    <div id="mainTag" style="margin: 0 auto; width: 90%; height: 400px"></div>
+    <h2 style="margin-left: 20px">分类下的博客数占比</h2>
+    <div
+      id="mainCategory"
+      style="margin: 0 auto; width: 90%; height: 400px"
+    ></div>
   </a-card>
 </template>
 
 <script setup lang="ts">
   import { onMounted, reactive, ref, watch } from 'vue';
+  import { getCategoryApi } from '@/api/category';
   import { Message } from '@arco-design/web-vue';
   import * as echarts from 'echarts/core';
 
@@ -22,38 +25,35 @@
   import { PieChart, PieSeriesOption } from 'echarts/charts';
   import { LabelLayout } from 'echarts/features';
   import { CanvasRenderer } from 'echarts/renderers';
-  import { getTagApi } from '@/api/tag';
-  import theme from 'echarts/types/src/theme/dark';
   import { useAppStore } from '@/store';
 
-  let renderData3 = reactive<string[]>([]);
-  let renderData4 = reactive<{ name: string; value: string }[]>([]);
-  const loading2 = ref(true);
+  let renderData1 = reactive<string[]>([]);
+  let renderData2 = reactive<{ name: string; value: string }[]>([]);
+  const loading = ref(true);
 
   const getData = async () => {
     try {
       // 获取数量
-      const data = await getTagApi();
+      const data = await getCategoryApi();
 
       // 查询数据
-      const data2 = await getTagApi({
+      const data2 = await getCategoryApi({
         page: 1,
         limit: data.data.data.count,
       });
       // 获取需要的数据
       const result = data2.data.data.list;
-      renderData3 = result.map((item: { tag: any; blog_num: number }) => ({
-        name: item.tag.name,
-        value: item.blog_num,
+      renderData1 = result.map((item: { category: any; blog_num: number }) => ({
+        name: item.category.name,
       }));
-      renderData4 = result.map((item: { tag: any; blog_num: number }) => ({
-        name: item.tag.name,
+      renderData2 = result.map((item: { category: any; blog_num: number }) => ({
+        name: item.category.name,
+        value: item.blog_num,
       }));
 
       // 加载完毕
-      loading2.value = false;
+      loading.value = false;
     } catch (err) {
-      Message.warning('1');
       Message.warning(err as string);
     }
   };
@@ -90,22 +90,19 @@
   watch(appStore, (newValue) => {
     if (newValue.theme === 'dark') {
       // 激活加载
-      loading2.value = !loading2.value;
+      loading.value = !loading.value;
       theme1.value = 'dark';
     } else {
       // 激活加载
-      loading2.value = !loading2.value;
+      loading.value = !loading.value;
       theme1.value = 'light';
     }
   });
 
   // 挂载，监控，才可成功
-  // onMounted(() => {
-  watch(loading2, () => {
-    console.log('theme1=', theme1.value);
-    console.log('loading2=', loading2.value);
+  watch(loading, () => {
     const myChart = echarts.init(
-      document.getElementById('mainTag') as HTMLElement,
+      document.getElementById('mainCategory') as HTMLElement,
       theme1.value
     );
     myChart.setOption({
@@ -124,15 +121,15 @@
         right: 10,
         top: 20,
         bottom: 20,
-        data: renderData4,
+        data: renderData1,
       },
       series: [
         {
-          name: '标签名称',
+          name: '分类名称',
           type: 'pie',
           radius: '55%',
           center: ['40%', '50%'],
-          data: renderData3,
+          data: renderData2,
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -144,7 +141,6 @@
       ],
     } as EChartsOption);
   });
-  // });
   getData();
 </script>
 

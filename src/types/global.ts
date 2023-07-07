@@ -13,9 +13,10 @@ declare module 'vue' {
 export default interface QueryParams {
   page: number;
   limit: number;
-  key?: string;
+  key?: string; // 模糊查询关键字
   role?: string | null;
-  image_type?: number | null;
+  image_type?: number | null; // 照片类型
+  sort?: string | null; // 排序方式
 }
 
 // 批量删除

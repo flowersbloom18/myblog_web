@@ -99,11 +99,8 @@
     }
   });
 
-  // 挂载，监控，才可成功
-  // onMounted(() => {
+  // 监控，才可成功
   watch(loading2, () => {
-    console.log('theme1=', theme1.value);
-    console.log('loading2=', loading2.value);
     const myChart = echarts.init(
       document.getElementById('mainTag') as HTMLElement,
       theme1.value
@@ -144,7 +141,6 @@
       ],
     } as EChartsOption);
   });
-  // });
   getData();
 </script>
 

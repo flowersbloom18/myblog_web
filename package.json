@@ -29,7 +29,6 @@
   "dependencies": {
     "@arco-design/web-vue": "^2.44.7",
     "@vueuse/core": "^9.3.0",
-    "arco-design-pro-vue": "^2.7.2",
     "axios": "^0.24.0",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.5",
@@ -40,9 +39,7 @@
     "nprogress": "^0.2.0",
     "pinia": "^2.0.23",
     "query-string": "^8.0.3",
-    "sortablejs": "^1.15.0",
     "vue": "^3.2.40",
-    "vue-echarts": "^6.2.3",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.0.14"
   },
@@ -51,10 +48,7 @@
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@types/lodash": "^4.14.186",
-    "@types/mockjs": "^1.0.7",
     "@types/nprogress": "^0.2.0",
-    "@types/sanitize-html": "^2.9.0",
-    "@types/sortablejs": "^1.15.0",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
     "@vitejs/plugin-vue": "^3.1.2",

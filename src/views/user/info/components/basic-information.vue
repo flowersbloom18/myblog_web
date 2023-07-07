@@ -64,6 +64,7 @@
   import { Message } from '@arco-design/web-vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import getFormatDate from '@/utils/date';
+  import { useUserStore } from '@/store';
 
   const data = ref([
     {
@@ -144,7 +145,7 @@
   const handleClick = () => {
     visible.value = true;
   };
-
+  const userStore = useUserStore();
   // 提交表单
   const handleSubmit = async () => {
     // 表单校验
@@ -161,9 +162,14 @@
         // 如果不为0则失败
         Message.error('信息修改失败');
         visible.value = false;
+      } else {
+        Message.success(res.data.msg);
+        await getData();
+
+        // 更新状态中昵称和头像
+        userStore.nick_name = form.nick_name;
+        userStore.avatar = form.avatar;
       }
-      Message.success(res.data.msg);
-      await getData();
     }
   };
 

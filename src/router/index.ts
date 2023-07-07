@@ -52,7 +52,7 @@ const router = createRouter({
         {
           path: 'dashboard',
           name: 'dashboard',
-          component: () => import('@/views/dashboard/workplace/index.vue'),
+          component: () => import('@/views/dashboard/index.vue'),
           meta: {
             locale: '仪表盘',
             requiresAuth: true,
@@ -212,9 +212,9 @@ const router = createRouter({
           },
           children: [
             {
-              path: 'hot-msg',
-              name: 'hot-msg',
-              component: () => import('@/views/user/list/index.vue'),
+              path: 'hot-info',
+              name: 'hot-info',
+              component: () => import('@/views/hot-info/index.vue'),
               meta: {
                 locale: '热搜信息',
                 requiresAuth: true,
@@ -277,7 +277,7 @@ const router = createRouter({
             {
               path: 'log',
               name: 'log',
-              component: () => import('@/views/user/info/index.vue'),
+              component: () => import('@/views/log/index.vue'),
               meta: {
                 locale: '系统日志',
                 requiresAuth: true,
@@ -285,9 +285,9 @@ const router = createRouter({
               },
             },
             {
-              path: 'info',
-              name: 'info',
-              component: () => import('@/views/user/info/index.vue'),
+              path: 'settings',
+              name: 'settings',
+              component: () => import('@/views/settings/index.vue'),
               meta: {
                 locale: '系统信息',
                 requiresAuth: true,

@@ -84,7 +84,7 @@ export function userLogout() {
 }
 
 // 获取用户列表
-export function getUserList(params: QueryParams) {
+export function getUserList(params?: QueryParams) {
   return Service.get('/api/users', {
     params,
     paramsSerializer: (obj) => {

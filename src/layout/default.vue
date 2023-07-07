@@ -382,7 +382,7 @@
                 其它内容
               </a-space>
             </template>
-            <a-menu-item key="hot-msg">
+            <a-menu-item key="hot-info">
               <a-space>
                 <svg
                   t="1688379191419"
@@ -555,7 +555,7 @@
                 系统日志
               </a-space>
             </a-menu-item>
-            <a-menu-item key="info">
+            <a-menu-item key="settings">
               <a-space>
                 <svg
                   x="1688378981389"
