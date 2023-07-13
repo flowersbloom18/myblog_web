@@ -1,17 +1,17 @@
-import localeLogin from '@/views/login/locale/zh-CN';
-import localeRegister from '@/views/register/locale/zh-CN';
-import localeForget from '@/views/forget-password/locale/zh-CN';
+import localeLogin from '@/views/admin/login/locale/zh-CN';
+import localeRegister from '@/views/admin/register/locale/zh-CN';
+import localeForget from '@/views/admin/forget-password/locale/zh-CN';
 
-import localeWorkplace from '@/views/dashboard/locale/zh-CN';
+import localeWorkplace from '@/views/admin/dashboard/locale/zh-CN';
 
-import localeSuccess from '@/views/result/success/locale/zh-CN';
-import localeError from '@/views/result/error/locale/zh-CN';
+import localeSuccess from '@/views/admin/result/success/locale/zh-CN';
+import localeError from '@/views/admin/result/error/locale/zh-CN';
 
-import locale403 from '@/views/exception/403/locale/zh-CN';
-import locale404 from '@/views/exception/404/locale/zh-CN';
-import locale500 from '@/views/exception/500/locale/zh-CN';
+import locale403 from '@/views/admin/exception/403/locale/zh-CN';
+import locale404 from '@/views/admin/exception/404/locale/zh-CN';
+import locale500 from '@/views/admin/exception/500/locale/zh-CN';
 
-import localeUserSetting from '@/views/user/info/locale/zh-CN';
+import localeUserSetting from '@/views/admin/user/info/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 

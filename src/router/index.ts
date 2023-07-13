@@ -12,7 +12,7 @@ const router = createRouter({
     {
       path: '/login', // 登录
       name: 'login',
-      component: () => import('@/views/login/index.vue'),
+      component: () => import('@/views/admin/login/index.vue'),
       meta: {
         requiresAuth: false,
       },
@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: '/register', // 注册
       name: 'register',
-      component: () => import('@/views/register/index.vue'),
+      component: () => import('@/views/admin/register/index.vue'),
       meta: {
         requiresAuth: false,
       },
@@ -36,10 +36,42 @@ const router = createRouter({
     {
       path: '/forgetPassword', // 找回密码
       name: 'forgetPassword',
-      component: () => import('@/views/forget-password/index.vue'),
+      component: () => import('@/views/admin/forget-password/index.vue'),
       meta: {
         requiresAuth: false,
       },
+    },
+    {
+      path: '/',
+      name: 'index_base',
+      component: () => import('../views/web/web.vue'),
+      children: [
+        {
+          path: '',
+          name: 'index',
+          component: () => import('../views/web/index.vue'),
+        },
+        // {
+        //   path: 'news',
+        //   name: 'news',
+        //   component: () => import('../views/web/news.vue'),
+        // },
+        // {
+        //   path: 'search',
+        //   name: 'search',
+        //   component: () => import('../views/web/search.vue'),
+        // },
+        // {
+        //   path: 'chat',
+        //   name: 'chat',
+        //   component: () => import('../views/web/chat_group.vue'),
+        // },
+        // {
+        //   path: 'article/:id',
+        //   name: 'article',
+        //   component: () => import('../views/web/article.vue'),
+        // },
+      ],
     },
 
     {
@@ -52,7 +84,7 @@ const router = createRouter({
         {
           path: 'dashboard',
           name: 'dashboard',
-          component: () => import('@/views/dashboard/index.vue'),
+          component: () => import('@/views/admin/dashboard/index.vue'),
           meta: {
             locale: '仪表盘',
             requiresAuth: true,
@@ -83,7 +115,7 @@ const router = createRouter({
                 {
                   path: 'blog_list',
                   name: 'blog_list',
-                  component: () => import('@/views/blog/index.vue'),
+                  component: () => import('@/views/admin/blog/index.vue'),
                   meta: {
                     locale: '博客列表',
                     requiresAuth: true,
@@ -94,7 +126,7 @@ const router = createRouter({
                   path: 'create_blog',
                   name: 'create_blog',
                   component: () =>
-                    import('@/views/blog/component/create/index.vue'),
+                    import('@/views/admin/blog/component/create/index.vue'),
                   meta: {
                     locale: '新增博客',
                     requiresAuth: true,
@@ -106,7 +138,7 @@ const router = createRouter({
                   name: 'edit_blog',
                   // 如果没有携带参数是否重定向
                   component: () =>
-                    import('@/views/blog/component/edit/index.vue'),
+                    import('@/views/admin/blog/component/edit/index.vue'),
                   meta: {
                     locale: '编辑博客',
                     requiresAuth: true,
@@ -118,7 +150,7 @@ const router = createRouter({
             {
               path: 'category',
               name: 'category',
-              component: () => import('@/views/category/index.vue'),
+              component: () => import('@/views/admin/category/index.vue'),
               meta: {
                 locale: '分类',
                 requiresAuth: true,
@@ -128,7 +160,7 @@ const router = createRouter({
             {
               path: 'tag',
               name: 'tag',
-              component: () => import('@/views/tag/index.vue'),
+              component: () => import('@/views/admin/tag/index.vue'),
               meta: {
                 locale: '标签',
                 requiresAuth: true,
@@ -138,7 +170,7 @@ const router = createRouter({
             {
               path: 'comment',
               name: 'comment',
-              component: () => import('@/views/user/collect/index.vue'),
+              component: () => import('@/views/admin/comment/index.vue'),
               meta: {
                 locale: '评论',
                 requiresAuth: true,
@@ -148,7 +180,7 @@ const router = createRouter({
             {
               path: 'attachment',
               name: 'attachment',
-              component: () => import('@/views/attachment/index.vue'),
+              component: () => import('@/views/admin/attachment/index.vue'),
               meta: {
                 locale: '附件',
                 requiresAuth: true,
@@ -171,7 +203,7 @@ const router = createRouter({
             {
               path: 'list',
               name: 'list',
-              component: () => import('@/views/user/list/index.vue'),
+              component: () => import('@/views/admin/user/list/index.vue'),
               meta: {
                 locale: '用户列表',
                 requiresAuth: true,
@@ -181,7 +213,7 @@ const router = createRouter({
             {
               path: 'info',
               name: 'info',
-              component: () => import('@/views/user/info/index.vue'),
+              component: () => import('@/views/admin/user/info/index.vue'),
               meta: {
                 locale: '我的信息',
                 requiresAuth: true,
@@ -191,9 +223,19 @@ const router = createRouter({
             {
               path: 'collect',
               name: 'collect',
-              component: () => import('@/views/user/collect/index.vue'),
+              component: () => import('@/views/admin/user/collect/index.vue'),
               meta: {
                 locale: '我的收藏',
+                requiresAuth: true,
+                roles: ['*'],
+              },
+            },
+            {
+              path: 'my_comment',
+              name: 'my_comment',
+              component: () => import('@/views/admin/user/comment/index.vue'),
+              meta: {
+                locale: '我的评论',
                 requiresAuth: true,
                 roles: ['*'],
               },
@@ -214,7 +256,7 @@ const router = createRouter({
             {
               path: 'hot-info',
               name: 'hot-info',
-              component: () => import('@/views/hot-info/index.vue'),
+              component: () => import('@/views/admin/hot-info/index.vue'),
               meta: {
                 locale: '热搜信息',
                 requiresAuth: true,
@@ -224,7 +266,7 @@ const router = createRouter({
             {
               path: 'music',
               name: 'music',
-              component: () => import('@/views/music/index.vue'),
+              component: () => import('@/views/admin/music/index.vue'),
               meta: {
                 locale: '音乐',
                 requiresAuth: true,
@@ -234,7 +276,7 @@ const router = createRouter({
             {
               path: 'friend-link',
               name: 'friend-link',
-              component: () => import('@/views/friend-link/index.vue'),
+              component: () => import('@/views/admin/friend-link/index.vue'),
               meta: {
                 locale: '友链',
                 requiresAuth: true,
@@ -244,7 +286,7 @@ const router = createRouter({
             {
               path: 'about',
               name: 'about',
-              component: () => import('@/views/about/index.vue'),
+              component: () => import('@/views/admin/about/index.vue'),
               meta: {
                 locale: '关于',
                 requiresAuth: true,
@@ -267,7 +309,7 @@ const router = createRouter({
             {
               path: 'announcement',
               name: 'announcement',
-              component: () => import('@/views/announcement/index.vue'),
+              component: () => import('@/views/admin/announcement/index.vue'),
               meta: {
                 locale: '系统公告',
                 requiresAuth: true,
@@ -277,7 +319,7 @@ const router = createRouter({
             {
               path: 'log',
               name: 'log',
-              component: () => import('@/views/log/index.vue'),
+              component: () => import('@/views/admin/log/index.vue'),
               meta: {
                 locale: '系统日志',
                 requiresAuth: true,
@@ -287,7 +329,7 @@ const router = createRouter({
             {
               path: 'settings',
               name: 'settings',
-              component: () => import('@/views/settings/index.vue'),
+              component: () => import('@/views/admin/settings/index.vue'),
               meta: {
                 locale: '系统信息',
                 requiresAuth: true,
@@ -311,7 +353,7 @@ const router = createRouter({
             {
               path: '403',
               name: '403',
-              component: () => import('@/views/exception/403/index.vue'),
+              component: () => import('@/views/admin/exception/403/index.vue'),
               meta: {
                 locale: '403',
                 requiresAuth: true,
@@ -322,7 +364,7 @@ const router = createRouter({
             {
               path: '404',
               name: '404',
-              component: () => import('@/views/exception/404/index.vue'),
+              component: () => import('@/views/admin/exception/404/index.vue'),
               meta: {
                 locale: '404',
                 requiresAuth: true,
@@ -332,7 +374,7 @@ const router = createRouter({
             {
               path: '500',
               name: '500',
-              component: () => import('@/views/exception/500/index.vue'),
+              component: () => import('@/views/admin/exception/500/index.vue'),
               meta: {
                 locale: '500',
                 requiresAuth: true,
@@ -347,7 +389,7 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
-      component: () => import('@/views/not-found/index.vue'),
+      component: () => import('@/views/admin/not-found/index.vue'),
     },
   ],
   scrollBehavior() {

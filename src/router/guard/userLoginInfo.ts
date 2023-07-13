@@ -7,55 +7,82 @@ import { isLogin } from '@/utils/auth';
 export default function setupUserLoginInfoGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     NProgress.start();
-    const userStore = useUserStore();
-    if (isLogin()) {
-      // 如果登录
-      if (userStore.role) {
-        next(); // 如果权限不为0
+
+    // 需要登录才能访问的路由名称
+    const requireAuth = [
+      'console',
+      'dashboard',
+      'content',
+      'blog',
+      'blog_list',
+      'created_blog',
+      'edit_blog',
+      'category',
+      'tag',
+      'comment',
+      'attachment',
+      'user',
+      'list',
+      'info',
+      'collect',
+      'other',
+      'music',
+      'hot-info',
+      'friend-link',
+      'about',
+      'system',
+      'announcement',
+      'log',
+      'settings',
+    ];
+    // 如果未登录，要访问关键位置则需要登录，否则通过。
+    // 否则登录，都通行
+
+    if (!isLogin()) {
+      if (requireAuth.includes(to.name as string)) {
+        next({
+          // 登录处理
+          name: 'login',
+          query: {
+            redirect: to.name,
+            ...to.query,
+          } as LocationQueryRaw,
+        });
       } else {
-        try {
-          await userStore.loadUserInfo();
-          next();
-        } catch (error) {
-          await userStore.logout();
-          next({
-            name: 'login',
-            query: {
-              redirect: to.name,
-              ...to.query,
-            } as LocationQueryRaw,
-          });
-        }
+        next();
       }
     } else {
-      // 路由前置守卫拦截，如果没有登录，则要进行登录，或注册，或忘记密码处理
-      if (to.name === 'login') {
-        // 路由要去的地方如果是login，则进入
-        next();
-        return;
-      }
-      if (to.name === 'test') {
-        next();
-        return;
-      }
-      if (to.name === 'register') {
-        // 注册
-        next();
-        return;
-      }
-      if (to.name === 'forgetPassword') {
-        // 忘记密码
-        next();
-        return;
-      }
-      next({
-        // 其它统统都要登录处理
-        name: 'login',
-        query: {
-          redirect: to.name,
-          ...to.query,
-        } as LocationQueryRaw,
-      });
+      next();
     }
+
+    // // 路由前置守卫拦截，没有登录无法进入关键位置。
+    // if (to.name === 'index') {
+    // }
+    // if (to.name === 'login') {
+    //   next();
+    //   return;
+    // }
+    // if (to.name === 'test') {
+    //   next();
+    //   return;
+    // }
+    // if (to.name === 'register') {
+    //   // 注册
+    //   next();
+    //   return;
+    // }
+    // if (to.name === 'forgetPassword') {
+    //   // 忘记密码
+    //   next();
+    //   return;
+    // }
+    // next({
+    //   // 其它统统都要登录处理
+    //   name: 'login',
+    //   query: {
+    //     redirect: to.name,
+    //     ...to.query,
+    //   } as LocationQueryRaw,
+    // });
   });
 }

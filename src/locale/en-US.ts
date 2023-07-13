@@ -1,17 +1,17 @@
-import localeLogin from '@/views/login/locale/en-US';
-import localeRegister from '@/views/register/locale/en-US';
-import localeForget from '@/views/forget-password/locale/en-US';
+import localeLogin from '@/views/admin/login/locale/en-US';
+import localeRegister from '@/views/admin/register/locale/en-US';
+import localeForget from '@/views/admin/forget-password/locale/en-US';
 
-import localeWorkplace from '@/views/dashboard/locale/en-US';
+import localeWorkplace from '@/views/admin/dashboard/locale/en-US';
 
-import localeSuccess from '@/views/result/success/locale/en-US';
-import localeError from '@/views/result/error/locale/en-US';
+import localeSuccess from '@/views/admin/result/success/locale/en-US';
+import localeError from '@/views/admin/result/error/locale/en-US';
 
-import locale403 from '@/views/exception/403/locale/en-US';
-import locale404 from '@/views/exception/404/locale/en-US';
-import locale500 from '@/views/exception/500/locale/en-US';
+import locale403 from '@/views/admin/exception/403/locale/en-US';
+import locale404 from '@/views/admin/exception/404/locale/en-US';
+import locale500 from '@/views/admin/exception/500/locale/en-US';
 
-import localeUserSetting from '@/views/user/info/locale/en-US';
+import localeUserSetting from '@/views/admin/user/info/locale/en-US';
 
 import localeSettings from './en-US/settings';
 

@@ -1,5 +1,5 @@
 import Service from '@/utils/service';
-import QueryParams, { Remove } from '@/types/global';
+import { Remove } from '@/types/global';
 
 // 评论表单
 export interface CommentFormType {
@@ -11,16 +11,22 @@ export interface CommentFormType {
 }
 
 // 评论列表数据
-export interface commentList {
+export interface CommentListType {
   id: number;
   created_at: string;
   content: string;
-  user_id: number;
   page_type: string;
   page: string;
   is_admin: string;
   father_id: number;
   panel_id: number;
+
+  user_id: number;
+  ip_address: string;
+  nick_name: string;
+  avatar: string;
+
+  father_nick_name: string;
 }
 
 // 新增评论
@@ -29,8 +35,8 @@ export function createCommentApi(data: CommentFormType) {
 }
 
 // 获取所有评论
-export function getAllCommentApi(params?: QueryParams) {
-  return Service.get('/api/comments', { params });
+export function getAllCommentApi() {
+  return Service.get('/api/comments');
 }
 
 // 获取【某一个】博客下的所有评论
@@ -50,7 +56,7 @@ export function getAboutCommentApi() {
 
 // 获取当前登录用户的所有评论
 export function getCurrentUserCommentApi() {
-  return Service.get('/api/comments_about');
+  return Service.get('/api/comments_user');
 }
 
 // 获取当前评论开关的状态
