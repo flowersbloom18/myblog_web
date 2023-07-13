@@ -12,7 +12,7 @@ export default function useUser() {
     Message.success('退出成功');
     localStorage.removeItem('userInfo');
     router.push({
-      name: logoutTo && typeof logoutTo === 'string' ? logoutTo : 'login',
+      name: logoutTo && true ? logoutTo : 'login',
       query: {
         ...router.currentRoute.value.query,
         redirect: currentRoute.name as string,

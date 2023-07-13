@@ -8,7 +8,6 @@ import localeSuccess from '@/views/admin/result/success/locale/en-US';
 import localeError from '@/views/admin/result/error/locale/en-US';
 
 import locale403 from '@/views/admin/exception/403/locale/en-US';
-import locale404 from '@/views/admin/exception/404/locale/en-US';
 import locale500 from '@/views/admin/exception/500/locale/en-US';
 
 import localeUserSetting from '@/views/admin/user/info/locale/en-US';
@@ -40,7 +39,6 @@ export default {
   ...localeSuccess,
   ...localeError,
   ...locale403,
-  ...locale404,
   ...locale500,
   ...localeUserSetting,
 };

@@ -7,20 +7,20 @@
         status="500"
         :subtitle="$t('exception.result.500.description')"
       />
-      <a-button key="back" type="primary">
+      <a-button key="back" type="primary" @click="back">
         {{ $t('exception.result.500.back') }}
       </a-button>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import { useRouter } from 'vue-router';
 
-<script lang="ts">
-  export default {
-    name: '500',
+  const router = useRouter();
+  const back = () => {
+    router.back();
   };
-  console.log('500');
 </script>
 
 <style scoped lang="less">

@@ -7,20 +7,20 @@
         status="403"
         :subtitle="$t('exception.result.403.description')"
       />
-      <a-button key="back" type="primary">
+      <a-button key="back" type="primary" @click="back">
         {{ $t('exception.result.403.back') }}
       </a-button>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import { useRouter } from 'vue-router';
 
-<script lang="ts">
-  export default {
-    name: '403',
+  const router = useRouter();
+  const back = () => {
+    router.back();
   };
-  console.log('403');
 </script>
 
 <style scoped lang="less">

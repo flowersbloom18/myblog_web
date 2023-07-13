@@ -8,7 +8,6 @@ import localeSuccess from '@/views/admin/result/success/locale/zh-CN';
 import localeError from '@/views/admin/result/error/locale/zh-CN';
 
 import locale403 from '@/views/admin/exception/403/locale/zh-CN';
-import locale404 from '@/views/admin/exception/404/locale/zh-CN';
 import locale500 from '@/views/admin/exception/500/locale/zh-CN';
 
 import localeUserSetting from '@/views/admin/user/info/locale/zh-CN';
@@ -40,7 +39,6 @@ export default {
   ...localeSuccess,
   ...localeError,
   ...locale403,
-  ...locale404,
   ...locale500,
   ...localeUserSetting,
 };

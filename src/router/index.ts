@@ -13,33 +13,21 @@ const router = createRouter({
       path: '/login', // 登录
       name: 'login',
       component: () => import('@/views/admin/login/index.vue'),
-      meta: {
-        requiresAuth: false,
-      },
     },
     {
       path: '/register', // 注册
       name: 'register',
       component: () => import('@/views/admin/register/index.vue'),
-      meta: {
-        requiresAuth: false,
-      },
     },
     {
       path: '/test', // 测试
       name: 'test',
       component: () => import('@/views/test.vue'),
-      meta: {
-        requiresAuth: false,
-      },
     },
     {
       path: '/forgetPassword', // 找回密码
       name: 'forgetPassword',
       component: () => import('@/views/admin/forget-password/index.vue'),
-      meta: {
-        requiresAuth: false,
-      },
     },
     {
       path: '/',
@@ -73,9 +61,9 @@ const router = createRouter({
         // },
       ],
     },
-
+    // 后台管理界面
     {
-      path: '/console', // 根路径
+      path: '/console',
       name: 'console',
       redirect: '/console/dashboard',
       component: () => import('@/layout/default.vue'),
@@ -98,8 +86,7 @@ const router = createRouter({
           redirect: '/console/content/blog/blog_list',
           meta: {
             locale: '博客相关',
-            icon: 'icon-user',
-            requiresAuth: true,
+            roles: ['1', '3'],
           },
           children: [
             {
@@ -109,7 +96,7 @@ const router = createRouter({
               meta: {
                 locale: '博客',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
               children: [
                 {
@@ -119,7 +106,7 @@ const router = createRouter({
                   meta: {
                     locale: '博客列表',
                     requiresAuth: true,
-                    roles: ['*'],
+                    roles: ['1', '3'],
                   },
                 },
                 {
@@ -130,7 +117,7 @@ const router = createRouter({
                   meta: {
                     locale: '新增博客',
                     requiresAuth: true,
-                    roles: ['*'],
+                    roles: ['1', '3'],
                   },
                 },
                 {
@@ -142,7 +129,7 @@ const router = createRouter({
                   meta: {
                     locale: '编辑博客',
                     requiresAuth: true,
-                    roles: ['*'],
+                    roles: ['1', '3'],
                   },
                 },
               ],
@@ -154,7 +141,7 @@ const router = createRouter({
               meta: {
                 locale: '分类',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
             {
@@ -164,7 +151,7 @@ const router = createRouter({
               meta: {
                 locale: '标签',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
             {
@@ -174,7 +161,7 @@ const router = createRouter({
               meta: {
                 locale: '评论',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
             {
@@ -184,7 +171,7 @@ const router = createRouter({
               meta: {
                 locale: '附件',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
           ],
@@ -196,7 +183,6 @@ const router = createRouter({
           redirect: '/console/user/list',
           meta: {
             locale: '用户相关',
-            icon: 'icon-user',
             requiresAuth: true,
           },
           children: [
@@ -207,7 +193,7 @@ const router = createRouter({
               meta: {
                 locale: '用户列表',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
             {
@@ -249,7 +235,6 @@ const router = createRouter({
           redirect: '/console/other/hot-msg',
           meta: {
             locale: '其它内容',
-            icon: 'icon-user',
             requiresAuth: true,
           },
           children: [
@@ -260,7 +245,7 @@ const router = createRouter({
               meta: {
                 locale: '热搜信息',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
             {
@@ -270,7 +255,7 @@ const router = createRouter({
               meta: {
                 locale: '音乐',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
             {
@@ -280,7 +265,7 @@ const router = createRouter({
               meta: {
                 locale: '友链',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
             {
@@ -290,7 +275,7 @@ const router = createRouter({
               meta: {
                 locale: '关于',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
           ],
@@ -302,7 +287,6 @@ const router = createRouter({
           redirect: '/console/system/announcement',
           meta: {
             locale: '系统相关',
-            icon: 'icon-user',
             requiresAuth: true,
           },
           children: [
@@ -313,7 +297,7 @@ const router = createRouter({
               meta: {
                 locale: '系统公告',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
             {
@@ -323,7 +307,7 @@ const router = createRouter({
               meta: {
                 locale: '系统日志',
                 requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
             {
@@ -333,57 +317,24 @@ const router = createRouter({
               meta: {
                 locale: '系统信息',
                 requiresAuth: true,
-                roles: ['*'],
-              },
-            },
-          ],
-        },
-        // 异常
-        {
-          path: 'exception',
-          name: 'exception',
-          redirect: '403',
-          meta: {
-            locale: '异常',
-            requiresAuth: true,
-            icon: 'icon-exclamation-circle',
-            order: 6,
-          },
-          children: [
-            {
-              path: '403',
-              name: '403',
-              component: () => import('@/views/admin/exception/403/index.vue'),
-              meta: {
-                locale: '403',
-                requiresAuth: true,
-                // roles: ['admin'],
-                roles: ['*'],
-              },
-            },
-            {
-              path: '404',
-              name: '404',
-              component: () => import('@/views/admin/exception/404/index.vue'),
-              meta: {
-                locale: '404',
-                requiresAuth: true,
-                roles: ['*'],
-              },
-            },
-            {
-              path: '500',
-              name: '500',
-              component: () => import('@/views/admin/exception/500/index.vue'),
-              meta: {
-                locale: '500',
-                requiresAuth: true,
-                roles: ['*'],
+                roles: ['1', '3'],
               },
             },
           ],
         },
       ],
+    },
+    // 权限错误
+    {
+      path: '/403',
+      name: '403',
+      component: () => import('@/views/admin/exception/403/index.vue'),
+    },
+    // 服务器出了点问题
+    {
+      path: '/500',
+      name: '500',
+      component: () => import('@/views/admin/exception/500/index.vue'),
     },
     // 404 Not Found
     {

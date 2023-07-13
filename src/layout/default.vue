@@ -35,7 +35,7 @@
             </a-space>
           </a-menu-item>
 
-          <a-sub-menu key="content">
+          <a-sub-menu v-show="role === 1 || role === 3" key="content">
             <template #title>
               <a-space>
                 <svg
@@ -285,7 +285,7 @@
                 用户相关
               </a-space>
             </template>
-            <a-menu-item key="list">
+            <a-menu-item v-show="role === 1 || role === 3" key="list">
               <a-space>
                 <svg
                   t="1688380135569"
@@ -381,7 +381,7 @@
             </a-menu-item>
           </a-sub-menu>
 
-          <a-sub-menu key="other">
+          <a-sub-menu v-show="role === 1 || role === 3" key="other">
             <template #title>
               <a-space>
                 <svg
@@ -492,7 +492,7 @@
             </a-menu-item>
           </a-sub-menu>
 
-          <a-sub-menu key="system">
+          <a-sub-menu v-show="role === 1 || role === 3" key="system">
             <template #title>
               <a-space>
                 <svg
@@ -598,16 +598,6 @@
               </a-space>
             </a-menu-item>
           </a-sub-menu>
-
-          <a-sub-menu key="exception">
-            <template #title>
-              <IconCalendar></IconCalendar>
-              异常页面
-            </template>
-            <a-menu-item key="403">403</a-menu-item>
-            <a-menu-item key="404">404</a-menu-item>
-            <a-menu-item key="500">500</a-menu-item>
-          </a-sub-menu>
         </a-menu>
 
         <!-- trigger -->
@@ -643,16 +633,21 @@
 </template>
 
 <script setup lang="ts">
-  import { IconCalendar } from '@arco-design/web-vue/es/icon';
   import NavBar from '@/components/admin/navbar/index.vue';
   import footerContent from '@/components/admin/footer/index.vue';
   import { useRoute, useRouter } from 'vue-router';
   import { computed, ref, watch } from 'vue';
-  import { useAppStore } from '@/store';
+  import { useAppStore, useUserStore } from '@/store';
 
   const route = useRoute();
   const router = useRouter();
   const appStore = useAppStore();
+
+  // 加载用户权限信息
+  const userStore = useUserStore();
+  userStore.loadUserInfo();
+  const role = ref();
+  role.value = userStore.userInfo.role;
 
   const item1 = ref<string | undefined>('仪表盘'); // 父导航
   const item2 = ref<string | undefined>(''); // 子导航
