@@ -21,6 +21,16 @@ export interface MusicForm {
   status: boolean;
   sort: number;
   created_at: string;
+
+  artist?: string;
+}
+
+export interface MusicForm2 {
+  name: string;
+  artist: string;
+
+  cover: string;
+  url: string;
 }
 
 // 新增音乐

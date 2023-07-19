@@ -4,7 +4,7 @@
       <a-col :span="2" style="line-height: 28px">
         <span style="font-size: 16px"> 新增博客 </span>
       </a-col>
-      <a-col :span="4" offset="18">
+      <a-col :span="6" offset="16">
         <a-space>
           <a-button @click="attachmentOpen">选择附件</a-button>
           <a-button @click="back">返回</a-button>
@@ -68,6 +68,27 @@
       >
         <a-input v-model="blogForm.title" placeholder="请输入标题" />
       </a-form-item>
+
+      <a-form-item field="abstract" label="摘要">
+        <a-textarea
+          v-model="blogForm.abstract"
+          show-word-limit
+          :max-length="150"
+          placeholder="请输入摘要"
+          allow-clear
+          auto-size
+        >
+          <template #suffix>
+            <a-tooltip
+              content="摘要，系统会根据博客自动生成，相对来说，自己写会更加美观"
+              position="top"
+            >
+              <icon-info-circle />
+            </a-tooltip>
+          </template>
+        </a-textarea>
+      </a-form-item>
+
       <a-form-item field="cover" label="封面">
         <a-input v-model="blogForm.cover" placeholder="请输入封面" />
       </a-form-item>
@@ -169,6 +190,7 @@
   const blogForm = reactive({
     title: '',
     content: '',
+    abstract: '', // 自己添加摘要，或系统添加（相对不美观）
     cover: '',
     is_publish: false,
     is_top: false,

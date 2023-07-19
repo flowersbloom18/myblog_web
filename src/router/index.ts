@@ -20,45 +20,67 @@ const router = createRouter({
       component: () => import('@/views/admin/register/index.vue'),
     },
     {
-      path: '/test', // 测试
-      name: 'test',
-      component: () => import('@/views/test.vue'),
-    },
-    {
       path: '/forgetPassword', // 找回密码
       name: 'forgetPassword',
       component: () => import('@/views/admin/forget-password/index.vue'),
     },
     {
       path: '/',
-      name: 'index_base',
+      name: 'index',
       component: () => import('../views/web/web.vue'),
       children: [
         {
           path: '',
-          name: 'index',
-          component: () => import('../views/web/index.vue'),
+          name: 'home',
+          component: () => import('../views/web/home.vue'),
         },
-        // {
-        //   path: 'news',
-        //   name: 'news',
-        //   component: () => import('../views/web/news.vue'),
-        // },
-        // {
-        //   path: 'search',
-        //   name: 'search',
-        //   component: () => import('../views/web/search.vue'),
-        // },
-        // {
-        //   path: 'chat',
-        //   name: 'chat',
-        //   component: () => import('../views/web/chat_group.vue'),
-        // },
-        // {
-        //   path: 'article/:id',
-        //   name: 'article',
-        //   component: () => import('../views/web/article.vue'),
-        // },
+        {
+          path: 'category',
+          name: 'category_index',
+          component: () => import('../views/web/category.vue'),
+        },
+        {
+          path: 'tag',
+          name: 'tag_index',
+          component: () => import('../views/web/tag.vue'),
+        },
+        {
+          path: 'info',
+          name: 'info_index',
+          component: () => import('../views/web/info.vue'),
+        },
+        {
+          path: 'friendlink',
+          name: 'friendlink_index',
+          component: () => import('../views/web/friend-link.vue'),
+        },
+        {
+          path: 'about',
+          name: 'about_index',
+          component: () => import('../views/web/about.vue'),
+        },
+        {
+          path: 'search',
+          name: 'search',
+          component: () => import('../views/web/search.vue'),
+        },
+        {
+          path: 'lists/:type(.*)',
+          name: 'lists',
+          component: () => import('../views/web/list.vue'),
+          props: (route) => ({
+            type: route.params.type, // tag/category
+            name: route.query.name, // 请求的数据
+          }),
+        },
+        {
+          path: 'blog/:name(.*)',
+          name: 'blog',
+          component: () => import('../views/web/blog.vue'),
+          props: (route) => ({
+            name: route.params.name, // 请求的数据
+          }),
+        },
       ],
     },
     // 后台管理界面
@@ -76,7 +98,7 @@ const router = createRouter({
           meta: {
             locale: '仪表盘',
             requiresAuth: true,
-            roles: ['*'],
+            roles: ['*'], // 权限，*代表所有可访问，1管理员，2用户，3访客（可以查看大部分内容，但没有修改权限）
           },
         },
         // 2、博客相关
@@ -90,8 +112,8 @@ const router = createRouter({
           },
           children: [
             {
-              path: 'blog',
-              name: 'blog',
+              path: 'blogs',
+              name: 'blogs',
               redirect: '/console/content/blog/blog_list',
               meta: {
                 locale: '博客',

@@ -1,12 +1,12 @@
 <template>
   <!--  <a-layout-footer class="footer">FlowersBloom</a-layout-footer>-->
-  <div class="footer"> FlowersBloom </div>
+  <div class="footer1"> FlowersBloom </div>
 </template>
 
 <script lang="ts" setup></script>
 
 <style lang="less" scoped>
-  .footer {
+  .footer1 {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -5,7 +5,7 @@
     <ul class="right-side">
       <!--主页-->
       <li>
-        <a-tooltip content="点击进入前台页面">
+        <a-tooltip content="点击进入主页">
           <a-button
             class="nav-btn"
             type="outline"
@@ -65,7 +65,9 @@
       <li>
         <a-dropdown trigger="hover">
           <a-space>
-            <span style="cursor: pointer">{{ nickName }}</span>
+            <span style="cursor: pointer; color: var(--color-text-1)">{{
+              nickName
+            }}</span>
             <a-avatar
               :size="32"
               :style="{ marginRight: '8px', cursor: 'pointer', fontSize: 0 }"
@@ -77,7 +79,7 @@
             <a-doption>
               <a-space @click="$router.push('/')">
                 <icon-home />
-                <span> 前台页面 </span>
+                <span> 主页 </span>
               </a-space>
             </a-doption>
             <a-doption>

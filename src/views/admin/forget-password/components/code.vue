@@ -16,6 +16,7 @@
   import { ref, watch, reactive } from 'vue';
   import { userBindEmailApi, userForgetPassword } from '@/api/user';
   import { Message } from '@arco-design/web-vue';
+  import { useUserStore } from '@/store';
 
   // eslint-disable-next-line vue/require-prop-types
   const props = defineProps(['isTrue', 'email2', 'case']); // 判断是否可以发送
@@ -27,8 +28,19 @@
   const status1 = ref(''); // 按钮状态
   // 限制60秒发送一次，最多发送3次，如果超过，则禁止发送。
   let timer;
+
+  // 前端拦截，如果权限为3游客，则禁止发送邮箱。
+  const userStore = useUserStore();
+  const userinfo = userStore.userInfo;
+
   const sendEmail = async () => {
     if (!props.isTrue) return; // 如果不满足条件，则不发送
+    // 满足则先判断权限
+    if (userinfo.role === 3) {
+      Message.warning('当前用户禁止使用邮箱!');
+      return;
+    }
+
     loading2.value = !loading2.value;
     if (countdown.value === 0) {
       countdown.value = 60; // 限定的时间，单位s

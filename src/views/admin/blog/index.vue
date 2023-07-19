@@ -10,7 +10,7 @@
             label-align="left"
           >
             <a-row :gutter="12">
-              <a-col :span="6">
+              <a-col :span="8">
                 <a-form-item field="key" label="查询博客">
                   <a-input v-model="page.key" placeholder="请输入博客的标题" />
                 </a-form-item>
@@ -209,7 +209,7 @@
   import { Message } from '@arco-design/web-vue';
   import getFormatDate from '@/utils/date';
   import QueryParams, { Remove, Colors } from '@/types/global';
-  import { blogList, deleteBlogApi, getBlogApi } from '@/api/blog';
+  import { BlogList, deleteBlogApi, getBlogApi } from '@/api/blog';
   import { useRouter } from 'vue-router';
 
   const router = useRouter();
@@ -222,6 +222,7 @@
     page: 1,
     limit: 10,
     key: '', // 模糊查询
+    sort: 'top_time desc,created_at desc', // 优先按照置顶时间进行降序排序，其次是发布时间降序排序。
   });
 
   const scroll = {
@@ -320,12 +321,17 @@
     },
   ];
 
-  const renderData = ref<blogList[]>([]);
+  const renderData = ref<BlogList[]>([]);
 
   // 链接跳转
   const linkSkip = (link: any) => {
     // 路由跳转了那么博客也随之出现吗？
-    router.push(`/${link}`);
+    // router.push(`/blog/${link}`);
+
+    router.push({
+      name: 'blog',
+      params: { name: link },
+    });
   };
   // 编辑表单
   const edit = (data: any) => {

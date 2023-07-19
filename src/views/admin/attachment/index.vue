@@ -9,12 +9,12 @@
           label-align="left"
         >
           <a-row :gutter="12">
-            <a-col :span="6">
+            <a-col :span="8">
               <a-form-item field="key" label="查询附件">
                 <a-input v-model="params.key" placeholder="请输入附件名称" />
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="8">
               <a-form-item field="image_type" label="存储位置">
                 <a-select
                   v-model="params.image_type"
@@ -77,8 +77,8 @@
         <a-card :bordered="false">
           <div> <icon-folder />&nbsp;&nbsp;{{ value.name }} </div>
           <a-row justify="start" style="margin-top: 10px">
-            <a-col :span="4"></a-col>
-            <a-col :span="8">
+            <a-col :span="3"></a-col>
+            <a-col :span="9">
               <a-button
                 type="primary"
                 status="success"
@@ -90,7 +90,7 @@
                 详情
               </a-button>
             </a-col>
-            <a-col :span="8">
+            <a-col :span="9">
               <a-popconfirm
                 content="确认删除吗?"
                 type="warning"
@@ -106,7 +106,7 @@
                 </a-button>
               </a-popconfirm>
             </a-col>
-            <a-col :span="4"></a-col>
+            <a-col :span="3"></a-col>
           </a-row>
 
           <!--根据不同类型渲染不同内容-->
@@ -121,7 +121,7 @@
                 </a-tag>
               </div>
               <img
-                :src="`/${value.url}`"
+                :src="getImage(value.url)"
                 alt="图片不存在"
                 style="width: 100%; height: 200px"
               />
@@ -255,6 +255,7 @@
     </a-form>
   </a-modal>
 </template>
+
 <script setup lang="ts">
   import QueryParams, { Remove } from '@/types/global';
   import { reactive, ref, watch } from 'vue';
@@ -384,6 +385,15 @@
 
   // 判断是否为照片，来切换不同组件
   const isImage = ref(false);
+
+  // 判断附件展示的是本地还是远程
+  const getImage = (url: string): string => {
+    // 远程则不变，本地则/
+    if (url.includes('http')) {
+      return url;
+    }
+    return `/${url}`;
+  };
 
   const getDetail = async (value: any) => {
     visible.value = true;

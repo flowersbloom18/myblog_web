@@ -10,13 +10,13 @@
             label-align="left"
           >
             <a-row :gutter="12">
-              <a-col :span="6">
-                <a-form-item field="key" label="日志水平">
+              <a-col :span="8">
+                <a-form-item field="key" label="日志类型">
                   <a-select
                     v-model="page.key"
                     style="width: 180px"
                     :options="levelOptions"
-                    :placeholder="$t('请输入日志水平')"
+                    :placeholder="$t('请输入日志类型')"
                   />
                 </a-form-item>
               </a-col>
@@ -181,7 +181,7 @@
       width: 100,
     },
     {
-      title: '日志水平',
+      title: '日志类型',
       dataIndex: 'level',
       align: 'center',
       slotName: 'level',

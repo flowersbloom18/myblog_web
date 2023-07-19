@@ -34,7 +34,7 @@
           <template #actions>
             <span>{{ getFormatDate(value2.created_at) }}</span>
             <span v-if="value2.ip_address"
-              >·&nbsp;IP&nbsp;属地{{ value2.ip_address }}
+              >&nbsp;·&nbsp;IP&nbsp;属地{{ value2.ip_address }}
             </span>
             <span
               v-show="showDelete(key2)"
@@ -122,8 +122,19 @@
   const router = useRouter();
   const skip = (value: any) => {
     // 需要指定链接跳转的具体位置
-    alert(value);
-    router.push({ name: value.page });
+    // 博客，友链，关于。
+    if (value.page_type === '博客') {
+      router.push({
+        name: 'blog',
+        params: { name: value.page },
+      });
+    } else if (value.page_type === '友链') {
+      router.push({ name: 'friendlink_index' });
+    } else if (value.page_type === '关于') {
+      router.push({ name: 'about_index' });
+    } else {
+      Message.info('页面不存在');
+    }
   };
 
   getDataMine();

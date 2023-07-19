@@ -13,29 +13,29 @@ export interface blogFormType {
 }
 
 // 博客列表数据
-export interface blogList {
-  id: number;
-  title: string;
-  abstract: string;
-  content: string; // 暂且不需要
-  cover: string;
+export interface BlogList {
+  id?: number;
+  title?: string;
+  abstract?: string;
+  content?: string; // 暂且不需要
+  cover?: string;
 
-  read_num: number;
-  comment_num: number;
-  like_num: number;
-  collect_num: number;
+  read_num?: number;
+  comment_num?: number;
+  like_num?: number;
+  collect_num?: number;
 
-  is_publish: boolean;
-  is_top: boolean;
-  top_time: string; // 暂且不需要
+  is_publish?: boolean;
+  is_top?: boolean;
+  top_time?: string; // 暂且不需要
 
-  category: string;
-  tags: string[];
+  category?: string;
+  tags?: string[];
 
-  author: string;
-  link: string;
+  author?: string;
+  link?: string;
 
-  created_at: string;
+  created_at?: string;
 }
 
 // 新增博客（请求体）
@@ -75,5 +75,5 @@ export function getBlogContentApi(id: string | null) {
 
 // 博客点赞(请求头）根据博客id
 export function createBlogLikeApi(id: number) {
-  return Service.get(`/api/blog/like/${id}`);
+  return Service.post(`/api/blog/like/${id}`);
 }

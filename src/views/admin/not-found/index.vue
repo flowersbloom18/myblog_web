@@ -16,7 +16,7 @@
 
   const router = useRouter();
   const back = () => {
-    router.back();
+    router.push({ name: 'home' });
   };
 </script>
 

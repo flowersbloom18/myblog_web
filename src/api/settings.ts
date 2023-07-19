@@ -1,5 +1,4 @@
 import Service from '@/utils/service';
-import QueryParams, { Remove } from '@/types/global';
 
 export interface SiteInfoFormType {
   create_at: string;

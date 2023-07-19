@@ -1,6 +1,19 @@
 <template>
   <div class="login-form-wrapper">
     <div class="login-form-title">{{ t('login.form.title') }}</div>
+    <a-tooltip content="网站演示账号：demo，密码：P@ssw0rd123.." position="top">
+      <span
+        :style="{
+          position: 'absolute',
+          top: '5px',
+          right: '6px',
+          fontSize: '18px',
+        }"
+      >
+        <icon-exclamation-circle />
+      </span>
+    </a-tooltip>
+
     <div class="login-form-error-msg">{{ errorMessage }}</div>
     <a-form
       ref="loginForm"
@@ -84,7 +97,7 @@
 <script lang="ts" setup>
   import { ref, reactive } from 'vue';
   import { useRouter } from 'vue-router';
-  import { Message } from '@arco-design/web-vue';
+  import { Message, Notification } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
@@ -175,6 +188,21 @@
           },
         });
       }
+
+      // 全局提示
+      const handleNotification = () => {
+        // 只有当游客访问才会提示
+        if (userIDInfo.role === 3) {
+          Notification.info({
+            title: '系统提示',
+            content:
+              '欢迎登录FlowersBloom的个人博客网站，当前权限为游客，跟用户权限一样，额外多了部分数据的查看权限，没有关键数据的增、删、改权限。',
+            duration: 12000,
+            closable: true,
+          });
+        }
+      };
+      handleNotification();
 
       isVerified.value = false; // 在登录信息输入错误后，需要重新验证表单。
       showSquare.value = false; // 此刻关闭。

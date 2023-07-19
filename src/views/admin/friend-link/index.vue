@@ -10,7 +10,7 @@
             label-align="left"
           >
             <a-row :gutter="12">
-              <a-col :span="6">
+              <a-col :span="8">
                 <a-form-item field="key" label="查询友链">
                   <a-input v-model="page.key" placeholder="请输入友链名称" />
                 </a-form-item>

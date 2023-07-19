@@ -1,13 +1,17 @@
 <template>
-  <a-card
-    class="general-card"
-    :title="$t('workplace.announcement')"
-    :header-style="{ paddingBottom: '0' }"
-  >
-    <template #extra>
-      <a-link @click="skip()">修改公告</a-link>
+  <a-card :header-style="{ paddingBottom: '0' }">
+    <template #title>
+      <span style="float: left; font-size: 16px">
+        <a-space>
+          <img
+            src="../../../../assets/images/announce.svg"
+            style="width: 23px"
+            alt="tag"
+          />
+          <span>公告信息</span>
+        </a-space>
+      </span>
     </template>
-
     <MdPreview :editor-id="id" :model-value="text" :theme="theme1" />
   </a-card>
 </template>
@@ -20,9 +24,7 @@
   // preview.css相比style.css少了编辑器那部分样式
   import 'md-editor-v3/lib/preview.css';
   import { useAppStore } from '@/store';
-  import { useRouter } from 'vue-router';
 
-  const router = useRouter();
   const id = 'preview-only';
   const text = ref('');
 
@@ -45,9 +47,6 @@
       theme1.value = 'light';
     }
   });
-  const skip = () => {
-    router.push({ name: 'announcement' });
-  };
 
   const getData = async () => {
     try {

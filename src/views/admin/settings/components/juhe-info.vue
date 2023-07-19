@@ -22,6 +22,9 @@
 
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
+  // eslint-disable-next-line import/no-duplicates
+  import { Notification } from '@arco-design/web-vue';
+  // eslint-disable-next-line import/no-duplicates
   import { Message } from '@arco-design/web-vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import {
@@ -29,7 +32,6 @@
     JuheFormType,
     updateJuheInfoApi,
   } from '@/api/settings';
-  import { Notification } from '@arco-design/web-vue';
 
   // 提示
   const handleNotification = () => {

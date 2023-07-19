@@ -132,8 +132,10 @@
   };
 
   const linkSkip = (link: any) => {
-    // 路由跳转了那么博客也随之出现吗？
-    router.push(`/${link}`);
+    router.push({
+      name: 'blog',
+      params: { name: link },
+    });
   };
 
   // 总共几条数据
