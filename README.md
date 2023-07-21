@@ -20,7 +20,7 @@
 
 
 
-[Myblog_Server后端项目链接](https://gitee.com/flowersbloom18/myblog_web)
+[Myblog_Server后端项目链接](https://github.com/flowersbloom18/myblog_server)
 
 
 
