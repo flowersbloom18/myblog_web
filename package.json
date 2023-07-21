@@ -1,17 +1,12 @@
 {
-  "name": "arco-design-pro-vue",
-  "description": "Arco Design Pro for Vue",
+  "name": "myblog_web",
   "version": "1.0.0",
   "private": false,
-  "author": "ArcoDesign Team",
   "license": "MIT",
   "scripts": {
     "dev": "vite --config ./config/vite.config.dev.ts",
     "prod": "vite --config ./config/vite.config.prod.ts",
-    "build": "vue-tsc --noEmit && vite build --config ./config/vite.config.prod.ts",
-    "report": "cross-env REPORT=true npm run build",
-    "preview": "npm run build && vite preview --host",
-    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "build": "vite build --config ./config/vite.config.prod.ts",
     "lint-staged": "npx lint-staged",
     "prepare": "husky install"
   },
@@ -48,6 +43,7 @@
     "@arco-plugins/vite-vue": "^1.4.5",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@types/crypto-js": "^4.1.1",
     "@types/lodash": "^4.14.186",
     "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.40.0",

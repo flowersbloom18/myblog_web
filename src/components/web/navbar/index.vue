@@ -2,44 +2,57 @@
   <div class="navbar">
     <div class="nav">
       <div class="menu-demo1">
-        <!--导航栏-->
-        <a-menu
-          :selected-keys="[currentRoute]"
-          style="height: 60px; line-height: 60px"
-          mode="horizontal"
-          :default-selected-keys="['home']"
-          :default-open-keys="['home']"
-          @menu-item-click="onClickMenuItem"
-        >
-          <a-menu-item
-            key="0"
-            class="menu-item"
-            :style="{ padding: 0, marginRight: '3px' }"
-            disabled
+        <div class="test">
+          <!--导航栏-->
+          <a-menu
+            class="menu0"
+            :selected-keys="[currentRoute]"
+            mode="horizontal"
+            :default-selected-keys="['home']"
+            :default-open-keys="['home']"
+            @menu-item-click="onClickMenuItem"
           >
-            <div class="logo">
-              <img :src="logo" alt="logo" style="width: 100%; height: 40px" />
-            </div>
-          </a-menu-item>
-          <a-menu-item key="home" class="menu-item"
-            ><icon-home />首页</a-menu-item
-          >
-          <a-menu-item key="category_index" class="menu-item"
-            ><icon-list />分类</a-menu-item
-          >
-          <a-menu-item key="tag_index" class="menu-item"
-            ><icon-tags />标签</a-menu-item
-          >
-          <a-menu-item key="info_index" class="menu-item"
-            ><icon-fire />信息</a-menu-item
-          >
-          <a-menu-item key="friendlink_index" class="menu-item">
-            <icon-user-group />友链</a-menu-item
-          >
-          <a-menu-item key="about_index" class="menu-item"
-            ><icon-info-circle />关于</a-menu-item
-          >
-        </a-menu>
+            <a-menu-item
+              key="0"
+              class="menu-item"
+              :style="{ padding: 0, marginRight: '3px' }"
+              disabled
+            >
+              <div class="logo">
+                <img
+                  v-if="logoMode"
+                  :src="lightLogo"
+                  alt="logo"
+                  style="width: 100%; height: 40px"
+                />
+                <img
+                  v-else
+                  :src="darkLogo"
+                  alt="logo"
+                  style="width: 100%; height: 40px"
+                />
+              </div>
+            </a-menu-item>
+            <a-menu-item key="home" class="menu-item"
+              ><icon-home />首页</a-menu-item
+            >
+            <a-menu-item key="category_index" class="menu-item"
+              ><icon-list />分类</a-menu-item
+            >
+            <a-menu-item key="tag_index" class="menu-item"
+              ><icon-tags />标签</a-menu-item
+            >
+            <a-menu-item key="info_index" class="menu-item"
+              ><icon-fire />信息</a-menu-item
+            >
+            <a-menu-item key="friendlink_index" class="menu-item">
+              <icon-user-group />友链</a-menu-item
+            >
+            <a-menu-item key="about_index" class="menu-item"
+              ><icon-info-circle />关于</a-menu-item
+            >
+          </a-menu>
+        </div>
       </div>
       <div class="search-container">
         <icon-search
@@ -152,6 +165,8 @@
   import useUser from '@/hooks/user';
   import { isLogin } from '@/utils/auth';
   import { useRoute, useRouter } from 'vue-router';
+  import lightLogo from '@/assets/logo-light.png';
+  import darkLogo from '@/assets/logo-dark.png';
 
   const route = useRoute();
   const router = useRouter();
@@ -159,23 +174,23 @@
   const userStore = useUserStore();
   const { logout } = useUser();
 
-  const logo = ref();
-  const dark2 = '/src/assets/logo-dark.png';
-  const light2 = '/src/assets/logo-light.png';
+  // logo的模式，如果为则白天true，否则false
+  // 如果只有一个logo则，logo固定。看着修改。
+  const logoMode = ref(true);
 
   // 获取默认值，基本上只会执行一次
   if (appStore.theme === 'dark') {
-    logo.value = dark2;
+    logoMode.value = false;
   } else {
-    logo.value = light2;
+    logoMode.value = true;
   }
 
   // 监视 appStore 的变化,来更换logo 。动态执行
   watch(appStore, (newValue) => {
     if (newValue.theme === 'dark') {
-      logo.value = dark2;
+      logoMode.value = false;
     } else {
-      logo.value = light2;
+      logoMode.value = true;
     }
   });
 
@@ -254,8 +269,10 @@
     width: 1000px;
     display: inline-block;
 
-    .menu-item {
+    .menu0 {
       font-size: 16px;
+      height: 60px;
+      line-height: 60px;
     }
   }
 

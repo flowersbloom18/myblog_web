@@ -269,9 +269,11 @@
   } from '@/api/attachment';
   import getFormatDate from '@/utils/date';
   import { FormInstance } from '@arco-design/web-vue/es/form';
+  import music from '@/assets/images/attachment-music.png';
+  import video from '@/assets/images/attachment-video.png';
 
-  const music = '/src/assets/images/attachment-music.png';
-  const video = '/src/assets/images/attachment-video.png';
+  // const music = '/src/assets/images/attachment-music.png';
+  // const video = '/src/assets/images/attachment-video.png';
   // 查询参数
   const params: QueryParams = reactive({
     page: 1,

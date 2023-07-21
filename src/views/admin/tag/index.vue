@@ -198,7 +198,7 @@
 
 <script lang="ts" setup>
   import Attachment from '@/views/admin/attachment/index.vue';
-  import { computed, reactive, ref, UnwrapRef } from 'vue';
+  import { reactive, ref, UnwrapRef } from 'vue';
   import {
     TableColumnData,
     TableRowSelection,
@@ -209,6 +209,7 @@
     FormRecord,
     nameCoverType,
     Remove,
+    RandomColor,
   } from '@/types/global';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import {
@@ -217,7 +218,6 @@
     getTagApi,
     updateTagApi,
   } from '@/api/tag';
-  import { RandomColor } from '@/types/global';
 
   // 打开附件
   const isOpen = ref(false);

@@ -14,15 +14,15 @@
       style="height: 440px"
     >
       <a-image
-        :src="value.cover"
-        :title="value.title"
+        :src="value?.cover"
+        :title="value?.title"
         style="cursor: pointer"
-        :description="value.abstract"
+        :description="value?.abstract"
         width="100%"
         height="400"
         footer-position="outer"
         :preview-visible="visible"
-        @click="skip(value.link as string)"
+        @click="skip(value?.link as string)"
         @preview-visible-change="
           () => {
             visible = false;
@@ -62,11 +62,17 @@
     const { data } = await getBlogApi({ page: 1, limit: 10 });
 
     if (data.data.count) {
-      // 清空默认
-      dataList.value.length = 0;
+      // dataList.value = [];
+
       // 找出发布的五篇
       dataList.value = data.data.list.filter((item: any) => item.is_publish);
-      dataList.value.length = 5;
+
+      // 如果长度大于5,则长度为5,否则为2，但是尽量不要为2.
+      if (dataList.value.length > 5) {
+        dataList.value.length = 5;
+        return;
+      }
+      dataList.value.length = 2;
     }
   };
 

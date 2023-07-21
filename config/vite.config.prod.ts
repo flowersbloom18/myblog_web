@@ -3,7 +3,7 @@ import baseConfig from './vite.config.base';
 import configCompressPlugin from './plugin/compress';
 import configVisualizerPlugin from './plugin/visualizer';
 import configArcoResolverPlugin from './plugin/arcoResolver';
-import configImageminPlugin from './plugin/imagemin';
+// import configImageminPlugin from './plugin/imagemin';
 
 export default mergeConfig(
   {
@@ -12,14 +12,14 @@ export default mergeConfig(
       configCompressPlugin('gzip'),
       configVisualizerPlugin(),
       configArcoResolverPlugin(),
-      configImageminPlugin(),
+      // configImageminPlugin(),// 暂时不压缩
     ],
     build: {
       rollupOptions: {
         output: {
           manualChunks: {
             arco: ['@arco-design/web-vue'],
-            chart: ['echarts', 'vue-echarts'],
+            chart: ['echarts'],
             vue: ['vue', 'vue-router', 'pinia', '@vueuse/core', 'vue-i18n'],
           },
         },

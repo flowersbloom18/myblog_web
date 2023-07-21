@@ -184,8 +184,6 @@
   // 获取路由转来的参数
   const router = useRouter();
 
-  const defaultCover = ref('');
-  defaultCover.value = '/src/assets/images/blog-default-cover.jpg';
   const visible = ref(false);
   const blogForm = reactive({
     title: '',
@@ -314,10 +312,6 @@
   // 发布【修改各种数据】
   const onPublish = async () => {
     visible.value = true;
-    // 默认封面
-    if (!blogForm.cover) {
-      blogForm.cover = defaultCover.value;
-    }
 
     // 当不存在数据才会获取
     if (!categoryData.length) {
@@ -363,9 +357,6 @@
       Message.warning('请输入完整信息！');
     } else {
       // 4、发送数据
-      if (!blogForm.cover) {
-        blogForm.cover = defaultCover.value;
-      }
 
       // 开始提交
       const res = await createBlogApi(blogForm);

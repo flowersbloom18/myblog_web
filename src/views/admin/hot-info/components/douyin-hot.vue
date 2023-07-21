@@ -11,32 +11,16 @@
       <a-list-item :key="index">
         <a-row>
           <a-col :span="2">
-            <div
-              v-if="index + 1 === 1"
-              class="image-with-text"
-              style="background-image: url('/src/assets/images/hot1.png')"
-            >
+            <div v-if="index + 1 === 1" class="image-with-text hot1">
               <span class="text">{{ index + 1 }}</span>
             </div>
-            <div
-              v-else-if="index + 1 === 2"
-              class="image-with-text"
-              style="background-image: url('/src/assets/images/hot2.png')"
-            >
+            <div v-else-if="index + 1 === 2" class="image-with-text hot2">
               <span class="text">{{ index + 1 }}</span>
             </div>
-            <div
-              v-else-if="index + 1 === 3"
-              class="image-with-text"
-              style="background-image: url('/src/assets/images/hot3.png')"
-            >
+            <div v-else-if="index + 1 === 3" class="image-with-text hot3">
               <span class="text">{{ index + 1 }}</span>
             </div>
-            <div
-              v-else
-              class="image-with-text"
-              style="background-image: url('/src/assets/images/hotDefault.png')"
-            >
+            <div v-else class="image-with-text hot4">
               <span class="text">{{ index + 1 }}</span>
             </div>
           </a-col>
@@ -78,6 +62,18 @@
 </script>
 
 <style scoped lang="less">
+  .hot1 {
+    background-image: url('@/assets/images/hot1.png');
+  }
+  .hot2 {
+    background-image: url('@/assets/images/hot2.png');
+  }
+  .hot3 {
+    background-image: url('@/assets/images/hot3.png');
+  }
+  .hot4 {
+    background-image: url('@/assets/images/hotDefault.png');
+  }
   .image-with-text {
     width: 45px;
     height: 22px;
@@ -91,7 +87,7 @@
     display: block;
     text-align: center;
     padding: 1px 0 0 6px;
-    color: white;
+    color: var(--color-text-2);
   }
 
   .title {

@@ -2,10 +2,7 @@
   <a-list :style="{ width: `800px`, margin: '20px auto' }" :bordered="false">
     <a-row>
       <a-col :span="2">
-        <div
-          class="image-with-text"
-          style="background-image: url('/src/assets/images/hot1.png')"
-        >
+        <div class="image-with-text hot1">
           <span class="text">1</span>
         </div>
       </a-col>
@@ -41,6 +38,9 @@
 </script>
 
 <style scoped lang="less">
+  .hot1 {
+    background-image: url('@/assets/images/hot1.png');
+  }
   .image-with-text {
     width: 45px;
     height: 22px;
@@ -54,7 +54,7 @@
     display: block;
     text-align: center;
     padding: 1px 0 0 6px;
-    color: white;
+    color: var(--color-text-2);
   }
 
   .title {

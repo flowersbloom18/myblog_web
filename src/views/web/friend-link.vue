@@ -10,6 +10,7 @@
           <div style="width: 860px; margin: 0 auto; height: 30px">
             <a-divider />
           </div>
+
           <a-row>
             <a-col :span="1"></a-col>
             <a-col :span="4"
@@ -22,123 +23,135 @@
           <div class="content">
             <a-row>
               <a-col :span="2"></a-col>
-              <a-col :span="2" style="font-size: 16px; margin-top: 20px"
-                >置顶组</a-col
+              <a-col
+                :span="2"
+                style="font-size: 16px; margin-top: 20px; margin-left: -30px"
+                ><a-tag color="blue">置顶组</a-tag></a-col
               >
             </a-row>
-            <ul>
-              <a-space wrap>
-                <li v-for="(value, index) in renderData" :key="index">
-                  <a-card
-                    v-show="value.is_top"
-                    hoverable
+            <ul class="flex1">
+              <li v-for="(value, index) in renderData" :key="index">
+                <a-card
+                  v-show="value.is_top"
+                  hoverable
+                  :style="{
+                    width: '260px',
+                    height: '126px',
+                    marginBottom: '20px',
+                  }"
+                >
+                  <div
                     :style="{
-                      width: '260px',
-                      height: '100%',
-                      marginBottom: '20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
                     }"
                   >
-                    <div
+                    <span
                       :style="{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        color: '#1D2129',
                       }"
                     >
-                      <span
-                        :style="{
-                          display: 'flex',
-                          alignItems: 'center',
-                          color: '#1D2129',
-                        }"
+                      <a-avatar
+                        style="
+                          margin-right: 8px;
+                          background-color: var(--color-bg-2);
+                        "
+                        :size="40"
                       >
-                        <a-avatar
-                          :style="{
-                            marginRight: '8px',
-                            backgroundColor: '#165DFF',
+                        <img alt="avatar" :src="value.logo" />
+                      </a-avatar>
+                      <a-typography>
+                        <a-typography-title
+                          :ellipsis="{
+                            rows: 1,
+                            showTooltip: true,
                           }"
-                          :size="40"
+                          :heading="5"
+                          style="font-size: 20px"
+                          >{{ value.name }}</a-typography-title
                         >
-                          <img alt="avatar" :src="value.logo" />
-                        </a-avatar>
-                        <a-typography>
-                          <a-typography-title :heading="5">{{
-                            value.name
-                          }}</a-typography-title>
-                          <a-typography-paragraph
-                            :ellipsis="{
-                              rows: 1,
-                              showTooltip: true,
-                            }"
-                            >{{ value.description }}</a-typography-paragraph
-                          >
-                        </a-typography>
-                      </span>
-                      <a-link :href="value.url">More</a-link>
-                    </div>
-                  </a-card>
-                </li>
-              </a-space>
+                        <a-typography-paragraph
+                          :ellipsis="{
+                            rows: 1,
+                            showTooltip: true,
+                          }"
+                          >{{ value.description }}</a-typography-paragraph
+                        >
+                      </a-typography>
+                    </span>
+                    <a-link :href="value.url">More</a-link>
+                  </div>
+                </a-card>
+              </li>
             </ul>
             <a-row>
               <a-col :span="2"></a-col>
-              <a-col :span="2" style="font-size: 16px; margin-top: 20px"
-                >默认组</a-col
+              <a-col
+                :span="2"
+                style="font-size: 16px; margin-top: 20px; margin-left: -30px"
+                ><a-tag color="blue">默认组</a-tag></a-col
               >
             </a-row>
-            <ul>
-              <a-space wrap>
-                <li v-for="(value, index) in renderData" :key="index">
-                  <a-card
-                    v-show="!value.is_top"
-                    hoverable
+            <ul class="flex2">
+              <li v-for="(value, index) in renderData" :key="index">
+                <a-card
+                  v-show="!value.is_top"
+                  hoverable
+                  :style="{
+                    width: '260px',
+                    height: '126px',
+                    marginBottom: '20px',
+                  }"
+                >
+                  <div
                     :style="{
-                      width: '260px',
-                      height: '100%',
-                      marginBottom: '20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
                     }"
                   >
-                    <div
+                    <span
                       :style="{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        color: '#1D2129',
                       }"
                     >
-                      <span
-                        :style="{
-                          display: 'flex',
-                          alignItems: 'center',
-                          color: '#1D2129',
-                        }"
+                      <a-avatar
+                        style="
+                          margin-right: 8px;
+                          background-color: var(--color-bg-2);
+                        "
+                        :size="40"
                       >
-                        <a-avatar
-                          :style="{
-                            marginRight: '8px',
-                            backgroundColor: '#165DFF',
+                        <img alt="avatar" :src="value.logo" />
+                      </a-avatar>
+                      <a-typography>
+                        <a-typography-title
+                          :ellipsis="{
+                            rows: 1,
+                            showTooltip: true,
                           }"
-                          :size="40"
+                          :heading="5"
+                          style="font-size: 20px"
+                          >{{ value.name }}</a-typography-title
                         >
-                          <img alt="avatar" :src="value.logo" />
-                        </a-avatar>
-                        <a-typography>
-                          <a-typography-title :heading="5">{{
-                            value.name
-                          }}</a-typography-title>
-                          <a-typography-paragraph
-                            :ellipsis="{
-                              rows: 1,
-                              showTooltip: true,
-                            }"
-                            >{{ value.description }}</a-typography-paragraph
-                          >
-                        </a-typography>
-                      </span>
-                      <a-link :href="value.url">More</a-link>
-                    </div>
-                  </a-card>
-                </li>
-              </a-space>
+                        <a-typography-paragraph
+                          :ellipsis="{
+                            rows: 1,
+                            showTooltip: true,
+                          }"
+                          >{{ value.description }}</a-typography-paragraph
+                        >
+                      </a-typography>
+                    </span>
+                    <a-link :href="value.url">More</a-link>
+                  </div>
+                </a-card>
+              </li>
             </ul>
 
             <div style="width: 860px; margin: 0 auto; height: 30px">
@@ -237,24 +250,46 @@
 </script>
 
 <style lang="less" scoped>
+  .flex1 {
+    padding: 0;
+    margin-left: 30px;
+    /* 弹性布局+换行*/
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px; /* 添加每一行之间的间距 */
+
+    li {
+      list-style: none;
+      box-sizing: border-box; /* 确保padding不会改变元素的尺寸 */
+    }
+  }
+
+  .flex2 {
+    padding: 0;
+    margin-left: 30px;
+    list-style: none;
+
+    gap: 1px;
+
+    /* 弹性布局+换行*/
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      list-style: none;
+    }
+  }
+
   .about {
     color: var(--color-text-2);
 
     .header {
       text-align: center;
     }
-    .info {
-      float: right;
-      margin-right: 20px;
-      margin-bottom: 5px;
-    }
 
     .content {
       width: 100%;
-
-      ul li {
-        list-style: none;
-      }
     }
   }
   .container {

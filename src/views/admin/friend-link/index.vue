@@ -268,6 +268,7 @@
     page: 1,
     limit: 10,
     key: '', // 模糊查询
+    sort: 'top_time desc,created_at desc', // 优先按照置顶时间进行降序排序，其次是发布时间降序排序。
   });
 
   // 创建友链

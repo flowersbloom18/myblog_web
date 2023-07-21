@@ -3,7 +3,18 @@
     <a-layout class="layout-demo">
       <a-layout-sider collapsible breakpoint="xl">
         <div class="logo">
-          <img :src="logo" alt="logo" style="width: 100%; height: 50px" />
+          <img
+            v-if="logoMode"
+            :src="lightLogo"
+            alt="logo"
+            style="width: 100%; height: 40px"
+          />
+          <img
+            v-else
+            :src="darkLogo"
+            alt="logo"
+            style="width: 100%; height: 40px"
+          />
         </div>
         <a-menu
           auto-open-selected
@@ -712,6 +723,8 @@
   import { useRoute, useRouter } from 'vue-router';
   import { computed, ref, watch } from 'vue';
   import { useAppStore, useUserStore } from '@/store';
+  import lightLogo from '@/assets/logo-light.png';
+  import darkLogo from '@/assets/logo-dark.png';
 
   const route = useRoute();
   const router = useRouter();
@@ -727,23 +740,23 @@
   const item2 = ref<string | undefined>(''); // 子导航
   const item3 = ref<string | undefined>(''); // 子导航
 
-  const logo = ref();
-  const dark = '/src/assets/logo-dark.png';
-  const light = '/src/assets/logo-light.png';
+  // logo的模式，如果为则白天true，否则false
+  // 如果只有一个logo则，logo固定。看着修改。
+  const logoMode = ref(true);
 
   // 获取默认值，基本上只会执行一次
   if (appStore.theme === 'dark') {
-    logo.value = dark;
+    logoMode.value = false;
   } else {
-    logo.value = light;
+    logoMode.value = true;
   }
 
   // 监视 appStore 的变化,来更换logo 。动态执行
   watch(appStore, (newValue) => {
     if (newValue.theme === 'dark') {
-      logo.value = dark;
+      logoMode.value = false;
     } else {
-      logo.value = light;
+      logoMode.value = true;
     }
   });
 

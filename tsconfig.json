@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
+    "allowJs": true,// 允许编译js文件
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -20,13 +21,13 @@
     ],
     "skipLibCheck": true
   },
-  //  "include": ["src/**/*", "src/**/*.vue"],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ],
+    "include": ["src/**/*", "src/**/*.vue"],
+//  "include": [
+//    "src/**/*.ts",
+//    "src/**/*.d.ts",
+//    "src/**/*.tsx",
+//    "src/**/*.vue"
+//  ],
   "exclude": [
     "node_modules"
   ]

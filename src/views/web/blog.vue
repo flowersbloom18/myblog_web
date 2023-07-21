@@ -200,11 +200,19 @@
         <!--移动的最终偏移量距离顶部80px-->
         <a-affix :offset-top="80">
           <a-card title="目录" class="border">
-            <MdCatalog
-              :editor-id="blogForm.link"
-              :scroll-element="scrollElement"
-              :theme="theme1"
-            />
+            <div
+              style="
+                height: auto !important ;
+                max-height: 600px;
+                overflow: auto;
+              "
+            >
+              <MdCatalog
+                :editor-id="blogForm.link"
+                :scroll-element="scrollElement"
+                :theme="theme1"
+              />
+            </div>
           </a-card>
         </a-affix>
       </div>

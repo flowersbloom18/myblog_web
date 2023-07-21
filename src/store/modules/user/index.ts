@@ -4,6 +4,7 @@ import { setToken, clearToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import aes from '@/utils/aes';
 import { Message } from '@arco-design/web-vue';
+import { stringify } from 'flatted';
 import { UserLoginInfoState } from './types';
 // import useAppStore from '../app';
 

@@ -351,7 +351,6 @@
 
   .slide-verify {
     position: relative;
-    //background-color: pink;
   }
 
   .slide-verify-block {
